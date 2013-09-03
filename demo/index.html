@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8' />
+	<title>Content Modal</title>
+
+	<link rel='stylesheet' type='text/css' media='all' href='demo.css' />
+	<link rel='stylesheet' type='text/css' media='all' href='../okModal.css' />
+
+	<script src='../jquery-1.10.2.js'></script>
+	<script src='../jquery.okModal.js'></script>
+	<script>
+		$(document).ready(function(){
+			$('a').okModal({
+				insideMarkup : '<div><p>Modal from link.</p></div>'
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div class="inside">
+
+		<div id="fragment">
+			<h1><a href="example.html">Open Modal</a></h1>
+		</div>
+
+	</div>
+</body>
+</html>
