@@ -1,18 +1,8 @@
 /*!
  *	Name:		Ok Modal
- *	Author: 	Mitchell Petty
- * 	Version: 	1.13
+ *	Author: 	Mitchell Petty <https://github.com/mpetty/ok-modal>
+ * 	Version: 	1.15
  *	Notes: 		Requires jquery 1.7+
- */
-
-/*
- * 	TODO:
- *		- Feature: Add 'gallery' functionality where you can go from one modal on the page to the next using arrow keys.
- * 		- Animate with css
- * 		- 'Bootstrap' style animations by gliding in from the top of the screen
- * 		- Ability to set if the modal should be centered or not
- * 		- Improve code
- *
  */
 (function($) {
 	"use strict";
@@ -23,16 +13,15 @@
 		this.selector = selector;
 		this.settings = settings;
 
-		// modal selectors
-		this.container = (this.settings.container.jquery) ? this.settings.container : $(this.settings.container);
-		this.modalWrap = $('> .' + this.settings.modalWrapName, this.container);
-		this.modal = $('.' + this.settings.modalName, this.modalWrap);
-		this.modalInside = $('.' + this.settings.modalName + '-inside', this.modalWrap);
-		this.overlay = $('.' + this.settings.overlayName, this.modalWrap);
-		this.loader = $('.' + this.settings.loaderName, this.modalWrap);
+		// Set up modal variables
+		this.container 		= (this.settings.container.jquery) ? this.settings.container : $(this.settings.container);
+		this.modal 			= $('.' + this.settings.modalName, this.container);
+		this.modalInside 	= $('.' + this.settings.modalName + '-inside', this.container);
+		this.overlay 		= $('.' + this.settings.overlayName, this.container);
+		this.loader 		= $('.' + this.settings.loaderName, this.container);
 
 		// Initialize
-		this.Initialize();
+		this.Initialize.call(this);
 
 	};
 
@@ -69,8 +58,9 @@
 			$(document).on('keydown.okModal closeModal.okModal', $.proxy(this.close, this));
 			this.modal.on('click.okModal', '.' + this.settings.closeModalName, $.proxy(this.close, this));
 			this.modal.on('click.okModal', '.ok-' + this.settings.closeModalName, $.proxy(this.close, this));
-			$('.' + this.settings.closeModalName, this.modalWrap).on('click.okModal', $.proxy(this.close, this));
-			$('.ok-' + this.settings.closeModalName, this.modalWrap).on('click.okModal', $.proxy(this.close, this));
+
+			$('.' + this.settings.closeModalName, this.modal).on('click.okModal', $.proxy(this.close, this));
+			$('.ok-' + this.settings.closeModalName, this.modal).on('click.okModal', $.proxy(this.close, this));
 
 			// Close on document click
 			if( this.settings.closeOnDocumentClick ) {
@@ -78,8 +68,8 @@
 
 				$(document).on('click.okModal', $.proxy(function(e) {
 					var $this = $(e.target);
-					if ( ! $this.parents().is('.' + this.settings.modalName + '-inside') && ! $this.is('.' + this.settings.modalName + '-inside') && $this.parents().is('.' + this.settings.modalWrapName)) {
-						this.close(e);
+					if ( ! $this.parents().is('.' + this.settings.modalName + '-inside') && ! $this.is('.' + this.settings.modalName + '-inside')) {
+						this.close();
 					}
 				}, this));
 			}
@@ -113,10 +103,10 @@
 					url = $(this.selector).attr('href');
 
 				} else if ( typeof e !== 'undefined' ) {
-					if( $(e.target).attr('href') ) {
-						url = $(e.target).attr('href');
-					} else if( $(e.target).closest('a').attr('href') ) {
-						url = $(e.target).closest('a').attr('href');
+					if( $(e.currentTarget).attr('href') ) {
+						url = $(e.currentTarget).attr('href');
+					} else if( $(e.currentTarget).closest('a').attr('href') ) {
+						url = $(e.currentTarget).closest('a').attr('href');
 					}
 
 				}
@@ -140,7 +130,7 @@
 				this.modalInside.empty();
 				this.modalInside.append('<div class="ok-' + this.settings.closeModalName + '"><span>X</span></div>')
 				this.modalInside.append($localMarkup);
-				this.modalWrap.addClass('iframe');
+				this.modal.addClass('iframe');
 				this.afterLoad();
 
 			// check if theres a url
@@ -152,9 +142,9 @@
 
 			// Show/Hide close button
 			if( this.settings.allowClose ) {
-				$('.ok-' + this.settings.closeModalName, this.modalWrap).show();
+				$('.ok-' + this.settings.closeModalName, this.modal).show();
 			} else {
-				$('.ok-' + this.settings.closeModalName, this.modalWrap).hide();
+				$('.ok-' + this.settings.closeModalName, this.modal).hide();
 			}
 
 			// Callback
@@ -168,7 +158,7 @@
 			// Define vars
 			var type = (typeof e === 'object' && typeof e.type !== 'undefined') ? e.type : false;
 			var keyEvent = (type === 'keydown' || type === 'keyup' || type === 'keypress') ? true : false;
-			var modalWrap, modal, overlay;
+			var modal, overlay;
 
 			// If e is object
 			if( typeof e ==='object' ) {
@@ -183,7 +173,7 @@
 			}
 
 			// Quit if no modals
-			if( ! $('.' + this.settings.modalWrapName).length ) return;
+			if( ! $('.' + this.settings.modalName).length ) return;
 
 			// Callback
 			this.settings.onBeforeClose.call(this, $(this.selector));
@@ -191,25 +181,23 @@
 			// Fadeout and remove
 			if( (this.settings.allowClose || type === 'closeModal' || type === 'ajaxComplete') && this.modal.length ) {
 
-				modalWrap = this.modalWrap;
 				modal = this.modal;
 				overlay = this.overlay;
 
 				modal.animate({'opacity':'hide'}, this.settings.animSpeed);
 				overlay.animate({'opacity':'hide'}, this.settings.animSpeed, $.proxy(function(){
 					// Remove modal
-					modalWrap.remove();
 					modal.remove();
 					overlay.remove();
 
 					// Remove event bindings
-					$('.' + this.settings.closeModalName, modalWrap).off('.okModal');
+					$('.' + this.settings.closeModalName, modal).off('.okModal');
 					modal.off('.okModal');
 					overlay.off('.okModal');
 
 					if( ! $('.ok-modal').length ) {
-						$(window).off('.okModal', this.close);
-						$(document).off('.okModal', this.close);
+						$(window).off('.okModal');
+						$(document).off('.okModal');
 					}
 				},this));
 
@@ -246,13 +234,18 @@
 
 					// vars
 					var markup = data;
+					var mheight = -1000;
 
 					// fade out loader
 					self.loader.animate({'opacity':'hide'}, self.settings.animSpeed, function() {
 
 						// If data is an object, assume markup is in .html
 						if( typeof data === 'object') {
-							if(typeof data.html !== 'undefined') data = data.html;
+							if(typeof data.html === 'string') {
+								data = data.html;
+							} else if( typeof data.view === 'string' ) {
+								data = data.view;
+							}
 						}
 
 						// set markup
@@ -263,8 +256,8 @@
 						}
 
 						// append markup
-						self.modalInside.empty().append(markup);
-						self.modalInside.hide().animate({'opacity':'show'},self.settings.animSpeed);
+						if(! self.settings.centered) self.modal.css({'marginTop': -self.modal.height()}).hide().animate({'opacity':'show','marginTop':self.settings.centeredOffset},self.settings.animSpeed+100, $.proxy(self.adjustModal,self));
+						self.modalInside.empty().append(markup).hide().animate({'opacity':'show'},self.settings.animSpeed);
 
 						// after load
 						self.afterLoad( 'ajaxLoad' );
@@ -309,8 +302,14 @@
 
 			// Fade in
 			if( this.modal.is(':hidden') ) {
-				this.modal.hide().animate({'opacity':'show'}, this.settings.animSpeed, $.proxy(this.events,this));
-				this.overlay.hide().animate({'opacity':'show'}, this.settings.animSpeed);
+				if(!this.settings.centered) {
+					this.modal.css({'marginTop':-this.modal.height()});
+					this.modal.hide().animate({'opacity':'show', 'marginTop':this.settings.centeredOffset}, this.settings.animSpeed, $.proxy(this.events,this));
+					this.overlay.hide().animate({'opacity':'show'}, this.settings.animSpeed);
+				} else {
+					this.modal.hide().animate({'opacity':'show'}, this.settings.animSpeed, $.proxy(this.events,this));
+					this.overlay.hide().animate({'opacity':'show'}, this.settings.animSpeed);
+				}
 			} else {
 				this.events();
 			}
@@ -334,46 +333,52 @@
 
 			// set vars
 			var windowHeight = $(window).height();
+			var windowWidth = $(window).width();
 			var modalMargin = false;
-			var scrollTop, contentHeight;
+			var scrollTop, contentHeight, contentWidth;
+			var margin = (!this.settings.centered) ? this.settings.centeredOffset : 0;
 
 			// Set modal dimensions
-			contentHeight = this.modal.height();
+			contentWidth = this.modalInside.outerWidth();
+			contentHeight = this.modal.outerHeight();
+			contentHeight = (!this.settings.centered) ? this.modal.outerHeight() + (margin*2) : this.modal.outerHeight();
 
 			// Center and fixed if smaller than window
-			if( contentHeight < windowHeight ) {
+			if( contentHeight < windowHeight && windowWidth > contentWidth ) {
 
 				modalMargin = parseInt(this.modal.css('marginTop'));
 				if($.isNumeric(modalMargin)) modalMargin = Math.abs(modalMargin);
 
 				if( this.settings.container === 'body' ) {
-					this.modalWrap.removeClass('static').addClass('fixed');
+					this.modal.removeClass('static').addClass('fixed');
 				}
 
-				if( modalMargin !== contentHeight / 2 ) {
-					this.modal.addClass('centered').removeClass('static').css({
-						'top' : '50%',
-						'marginTop' : - contentHeight / 2,
-						'padding' : 0
+				if( this.settings.centered ) {
+					if( modalMargin !== contentHeight / 2 ) {
+						this.modal.addClass('centered fixed').removeClass('static').css({
+							'top' : '50%',
+							'marginTop' : - contentHeight / 2,
+							'marginBottom' : 0
+						});
+					}
+				} else {
+					this.modal.removeClass('centered static').addClass('fixed').css({
+						'top' : 0,
+						'marginTop' : margin,
+						'marginBottom' : margin
 					});
 				}
 
 			// Center and static if larger than window
 			} else {
-
-				if( this.settings.container === 'body' ) {
-					this.modalWrap.removeClass('fixed').addClass('static');
-				}
-
 				if( ! this.modal.hasClass('static') ) {
 					scrollTop = $(window).scrollTop() - this.container.offset().top;
-					scrollTop = (scrollTop <= 50) ? scrollTop : scrollTop - 50;
+					scrollTop = (scrollTop < 50 && margin === 0) ? 0 : scrollTop + margin;
 
-					this.modal.removeClass('centered').addClass('static').css({
-						'top' : scrollTop,
-						'margin' : 0,
-						'paddingTop' : 50,
-						'paddingBottom' : 50
+					this.modal.removeClass('centered fixed').addClass('static').css({
+						'top' : 0,
+						'marginTop' : scrollTop,
+						'marginBottom' : 0
 					});
 				}
 
@@ -387,14 +392,11 @@
 			// Define vars
 			var $modal = $('.' + this.settings.modalName, this.container);
 			var $modalInside = $('.' + this.settings.modalName + '-inside', this.container);
-			var markup = $('<div class="'+this.settings.modalWrapName+'">\
-							<div class="' + this.settings.overlayName + '"></div>\
+			var markup = $('<div class="' + this.settings.overlayName + '"></div>\
 							<div class="' + this.settings.modalName + ' modal-'+ this.settings.modalSkin +'">\
 								<div class="' + this.settings.loaderName + '"></div>\
 								<div class="' + this.settings.modalName + '-inside"></div>\
-							</div>\
-					    </div>\
-						');
+							</div>');
 
 			// Update container
 			this.container.css({'position' : 'relative'});
@@ -407,12 +409,12 @@
 			if( ! $modal.length ) {
 				this.container.append(markup);
 			} else {
-				this.modalWrap.remove();
+				this.modal.remove();
+				this.overlay.remove();
 				this.container.append(markup);
 			}
 
 			// set global modal vars
-			this.modalWrap = $('> .' + this.settings.modalWrapName, this.container);
 			this.modal = $('.' + this.settings.modalName, this.container);
 			this.modalInside = $('.' + this.settings.modalName + '-inside', this.container);
 			this.overlay = $('.' + this.settings.overlayName, this.container);
@@ -483,17 +485,44 @@
 	/* Initialize Plugin without selector */
 	$.okModal = function( options ) {
 
-		// Set settings
-		var settings = $.extend(true, {}, $.fn.okModal.defaults, options);
+		// If modal initialized with settings
+		if ( typeof(options) === 'object' || typeof(options) === 'undefined' ) {
 
-		// Create object
-		var okModal = new okModal(false, settings);
+			// Set settings
+			var settings = $.extend(true, {}, $.fn.okModal.defaults, options);
+
+			// Create object
+			var okModal = new OkModal(false, settings);
+
+			// Add object reference to the selector
+			$(document).data('okModal', okModal);
+
+		// If modal initialized with a method call
+		} else if ( typeof options === 'string' ) {
+
+			// Set reference to selectors object
+			var data = $(document).data('okModal');
+
+			// Make sure the data is an object
+			if( typeof data === 'object' ) {
+
+				// Adjust Modal
+				if ( options === 'adjust' && $.isFunction(data.adjustModal) ) {
+					data.adjustModal();
+
+				// Close Modal
+				} else if ( options === 'close' && $.isFunction(data.close) ) {
+					data.close();
+				}
+
+			}
+
+		};
 
 	};
 
 	/* Set options obj */
 	$.fn.okModal.defaults = {
-		modalWrapName 			: 'ok-modal-wrap',
 		modalName 				: 'ok-modal',
 		loaderName 				: 'ok-modal-loader',
 		overlayName 			: 'ok-modal-overlay',
@@ -501,6 +530,8 @@
 		loadInsideName 			: 'load-inside',
 		modalSkin 				: 'default',
 		container 				: 'body',
+		centered				: true,
+		centeredOffset			: 50,
 		fixed 					: true,
 		animSpeed 				: 150,
 		modalWidth 				: 800,
