@@ -66,8 +66,9 @@
 			if( this.settings.closeOnDocumentClick ) {
 				this.overlay.off('.okModal').on('click.okModal', $.proxy(this.close, this));
 
-				$(document).on('click.okModal', $.proxy(function(e) {
+				$('.' + this.settings.modalName +', .'+ this.settings.overlayName).on('click.okModal', $.proxy(function(e) {
 					var $this = $(e.target);
+
 					if ( ! $this.parents().is('.' + this.settings.modalName + '-inside') && ! $this.is('.' + this.settings.modalName + '-inside')) {
 						this.close();
 					}
