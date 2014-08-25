@@ -1,7 +1,7 @@
 /*!
  *	Name:		Ok Modal
  *	Author: 	Mitchell Petty <https://github.com/mpetty/ok-modal>
- * 	Version: 	1.15
+ * 	Version: 	1.15.2
  *	Notes: 		Requires jquery 1.7+
  */
 (function($) {
@@ -393,7 +393,7 @@
 			// Define vars
 			var $modal = $('.' + this.settings.modalName, this.container);
 			var $modalInside = $('.' + this.settings.modalName + '-inside', this.container);
-			var markup = $('<div class="' + this.settings.overlayName + '"></div>\
+			var markup = $('<div class="' + this.settings.overlayName + ' modal-'+ this.settings.modalSkin + '"></div>\
 							<div class="' + this.settings.modalName + ' modal-'+ this.settings.modalSkin +'">\
 								<div class="' + this.settings.loaderName + '"></div>\
 								<div class="' + this.settings.modalName + '-inside"></div>\
