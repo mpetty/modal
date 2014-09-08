@@ -422,7 +422,7 @@
 			this.loader = $('.' + this.settings.loaderName, this.container);
 
 			// Set modal width
-			if(this.settings.modalWidth) this.modalInside.css({'width' : this.settings.modalWidth});
+			if(this.settings.modalWidth) this.modalInside.css({'max-width' : this.settings.modalWidth});
 
 		}
 

@@ -1,0 +1,16 @@
+{
+  "name": "ok-modal",
+  "version": "1.15.2",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mpetty/ok-modal.git"
+  },
+  "devDependencies": {
+    "grunt": ">=0.4.1",
+    "grunt-contrib-concat": ">=0.3.0",
+    "grunt-contrib-sass": ">=0.7.2",
+    "grunt-contrib-uglify": ">=0.3.2",
+    "grunt-contrib-watch": ">=0.5.3",
+    "grunt-contrib-jshint": ">=0.8.0"
+  }
+}

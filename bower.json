@@ -1,0 +1,23 @@
+{
+	"name": "OkModal",
+	"version": "1.15.2",
+	"license": "MIT",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"demo",
+		"src",
+		"*.json",
+		"Gruntfile.js",
+		"readme.md"
+	],
+  	"main": [
+  		"jquery.okModal.js",
+  		"okModal.css"
+  	],
+	"dependencies": {
+		"jquery": ">=1.7.0"
+	}
+}

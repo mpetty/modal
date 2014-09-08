@@ -1,6 +1,15 @@
+# Global #
+######################
 .sass-cache
+node_modules
+npm-debug.log
+*.log
+*.css.map
+*.js.map
+.env.local.php
+.env.php
 
-# OS generated files #
+# OS files #
 ######################
 .DS_Store
 .DS_Store?
@@ -9,3 +18,4 @@
 ehthumbs.db
 Thumbs.db
 *Thumbs.db
+._*
