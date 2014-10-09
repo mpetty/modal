@@ -213,7 +213,13 @@
 		ajaxLoad : function(url) {
 
 			// reference to self
-			var self = this;
+			var self = this,
+				ajaxOptions = {
+					url: url,
+					type: self.settings.ajaxType,
+					data: self.settings.ajaxData,
+					global: ajaxGlobal
+				};
 
 			// added loading class
 			this.modal.addClass('loading');
@@ -225,76 +231,76 @@
 				this.overlay.hide().animate({'opacity':'show'}, this.settings.animSpeed);
 			}
 
+			// Merge options
+			ajaxOptions = $.extend({}, ajaxOptions, self.settings.ajaxSettings);
+
 			// Send request for content
-			$.ajax({
-				url: url,
-				type: self.settings.ajaxType,
-				data: self.settings.ajaxData,
+			ajaxOptions.success = function( data, status, ajaxObj ) {
 
-				success: function( data, status, ajaxObj ) {
+				// vars
+				var markup = data;
+				var mheight = -1000;
 
-					// vars
-					var markup = data;
-					var mheight = -1000;
+				// fade out loader
+				self.loader.animate({'opacity':'hide'}, self.settings.animSpeed, function() {
 
-					// fade out loader
-					self.loader.animate({'opacity':'hide'}, self.settings.animSpeed, function() {
-
-						// If data is an object, assume markup is in .html
-						if( typeof data === 'object') {
-							if(typeof data.html === 'string') {
-								data = data.html;
-							} else if( typeof data.view === 'string' ) {
-								data = data.view;
-							}
+					// If data is an object, assume markup is in .html
+					if( typeof data === 'object') {
+						if(typeof data.html === 'string') {
+							data = data.html;
+						} else if( typeof data.view === 'string' ) {
+							data = data.view;
 						}
+					}
 
-						// set markup
-						if( self.settings.ajaxFragment ) {
-							markup = $(self.settings.ajaxFragment, $(data)).html();
-						} else {
-							markup = $(data);
-						}
+					// set markup
+					if( self.settings.ajaxFragment ) {
+						markup = $(self.settings.ajaxFragment, $(data)).html();
+					} else {
+						markup = $(data);
+					}
 
-						// append markup
-						if(! self.settings.centered) self.modal.css({'marginTop': -self.modal.height()}).hide().animate({'opacity':'show','marginTop':self.settings.centeredOffset},self.settings.animSpeed+100, $.proxy(self.adjustModal,self));
-						self.modalInside.empty().append(markup).hide().animate({'opacity':'show'},self.settings.animSpeed);
+					// append markup
+					if(! self.settings.centered) self.modal.css({'marginTop': -self.modal.height()}).hide().animate({'opacity':'show','marginTop':self.settings.centeredOffset},self.settings.animSpeed+100, $.proxy(self.adjustModal,self));
+					self.modalInside.empty().append(markup).hide().animate({'opacity':'show'},self.settings.animSpeed);
 
-						// after load
-						self.afterLoad( 'ajaxLoad' );
-
-						// callback
-						self.settings.afterAjaxSuccess.call(self, data, ajaxObj);
-
-					});
-
-				},
-
-				error: function( ajaxObj, status, error ) {
-
-					// fade out loader
-					self.loader.animate({'opacity':'hide'}, self.settings.animSpeed, function() {
-
-						// callback
-						self.settings.afterAjaxError.call(self, ajaxObj, error);
-
-						// close
-						self.close();
-
-					});
-
-				},
-
-				complete: function( ajaxObj, status ) {
-
-					// update modal
-					self.modal.removeClass('loading');
+					// after load
+					self.afterLoad( 'ajaxLoad' );
 
 					// callback
-					self.settings.afterAjaxComplete.call(self, ajaxObj);
+					self.settings.afterAjaxSuccess.call(self, data, ajaxObj);
 
-				}
-			});
+				});
+
+			};
+
+			ajaxOptions.error = function( ajaxObj, status, error ) {
+
+				// fade out loader
+				self.loader.animate({'opacity':'hide'}, self.settings.animSpeed, function() {
+
+					// callback
+					self.settings.afterAjaxError.call(self, ajaxObj, error);
+
+					// close
+					self.close();
+
+				});
+
+			};
+
+			ajaxOptions.complete = function( ajaxObj, status ) {
+
+				// update modal
+				self.modal.removeClass('loading');
+
+				// callback
+				self.settings.afterAjaxComplete.call(self, ajaxObj);
+
+			};
+
+			// Send request
+			$.ajax(ajaxOptions);
 
 		},
 
@@ -551,6 +557,8 @@
 		ajaxFragment 			: false,
 		ajaxUrl 				: false,
 		ajaxData 				: false,
+		ajaxGlobal 				: true,
+		ajaxSettings			: {},
 
 		afterInit 				: $.noop,
 		afterOpen 				: $.noop,
