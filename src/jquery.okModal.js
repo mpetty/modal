@@ -218,7 +218,7 @@
 					url: url,
 					type: self.settings.ajaxType,
 					data: self.settings.ajaxData,
-					global: ajaxGlobal
+					global: self.settings.ajaxGlobal
 				};
 
 			// added loading class
