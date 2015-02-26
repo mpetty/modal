@@ -14,8 +14,8 @@
 		"readme.md"
 	],
   	"main": [
-  		"jquery.okModal.js",
-  		"okModal.css"
+  		"jquery.okModal.min.js",
+  		"okModal.min.css"
   	],
 	"dependencies": {
 		"jquery": ">=1.7.0"

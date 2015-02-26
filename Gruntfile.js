@@ -54,36 +54,23 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				options: {
-					style: 'compressed'
+					style: 'compressed',
+					sourcemap: 'none'
 				},
 				files: {
-					'okModal.min.css': 'src/styles.scss'
+					'okModal.min.css': 'src/okModal.scss'
 				}
 			}
 		},
 
 		watch: {
-			jshint: {
+			js: {
 				files: [
 					'src/*.js'
 				],
 				tasks: [
-					'jshint'
-				]
-			},
-			concat: {
-				files: [
-					'src/*.js'
-				],
-				tasks: [
-					'concat'
-				]
-			},
-			uglify: {
-				files: [
-					'src/*.js',
-				],
-				tasks: [
+					'jshint',
+					'concat',
 					'uglify'
 				]
 			},
@@ -100,9 +87,9 @@ module.exports = function(grunt) {
 
 	});
 
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
