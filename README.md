@@ -6,7 +6,7 @@ Library for opening content in a modal window. Built to be used with web applica
 
 ## Bower Installation
 
-add Fill Select to your project's `bower.json` file, like:
+Add to your project's `bower.json` file, like:
 
 ```json
 {
