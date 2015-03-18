@@ -1,13 +1,13 @@
 /*!
- *	Name:		Ok Modal
- *	Author: 	Mitchell Petty <https://github.com/mpetty/ok-modal>
- * 	Version: 	1.15.2
+ *	Name:		Modal
+ *	Author: 	Mitchell Petty <https://github.com/mpetty/modal>
+ * 	Version: 	1.15.3
  *	Notes: 		Requires jquery 1.7+
  */
 (function($) {
 	"use strict";
 
-	var OkModal = function( selector, settings ) {
+	var Modal = function( selector, settings ) {
 
 		// Set properties
 		this.selector = selector;
@@ -25,7 +25,7 @@
 
 	};
 
-	OkModal.prototype = {
+	Modal.prototype = {
 
 		/* Initialize */
 		Initialize : function() {
@@ -38,12 +38,12 @@
 			// If event delegation
 			} else if( this.settings.eventDelegation !== false && typeof this.settings.delegatedSelector === 'object' ) {
 
-				$(this.selector).off('.okModal').on('click.okModal', this.settings.delegatedSelector, $.proxy(this.open, this));
+				$(this.selector).off('.modal').on('click.modal', this.settings.delegatedSelector, $.proxy(this.open, this));
 
 			// Else
 			} else {
 
-				$(this.selector).off('.okModal').on('click.okModal', $.proxy(this.open, this));
+				$(this.selector).off('.modal').on('click.modal', $.proxy(this.open, this));
 
 			}
 
@@ -53,20 +53,20 @@
 		events : function() {
 
 			// Add event listeners
-			$(document).on('updateModal.okModal ajaxComplete.okModal', $.proxy(this.adjustModal,this));
-			$(window).on('resize.okModal scroll.okModal', $.proxy(this.adjustModal,this));
-			$(document).on('keydown.okModal closeModal.okModal', $.proxy(this.close, this));
-			this.modal.on('click.okModal', '.' + this.settings.closeModalName, $.proxy(this.close, this));
-			this.modal.on('click.okModal', '.ok-' + this.settings.closeModalName, $.proxy(this.close, this));
+			$(document).on('updateModal.modal ajaxComplete.modal', $.proxy(this.adjustModal,this));
+			$(window).on('resize.modal scroll.modal', $.proxy(this.adjustModal,this));
+			$(document).on('keydown.modal closeModal.modal', $.proxy(this.close, this));
+			this.modal.on('click.modal', '.' + this.settings.closeModalName, $.proxy(this.close, this));
+			this.modal.on('click.modal', '.ok-' + this.settings.closeModalName, $.proxy(this.close, this));
 
-			$('.' + this.settings.closeModalName, this.modal).on('click.okModal', $.proxy(this.close, this));
-			$('.ok-' + this.settings.closeModalName, this.modal).on('click.okModal', $.proxy(this.close, this));
+			$('.' + this.settings.closeModalName, this.modal).on('click.modal', $.proxy(this.close, this));
+			$('.ok-' + this.settings.closeModalName, this.modal).on('click.modal', $.proxy(this.close, this));
 
 			// Close on document click
 			if( this.settings.closeOnDocumentClick ) {
-				this.overlay.off('.okModal').on('click.okModal', $.proxy(this.close, this));
+				this.overlay.off('.modal').on('click.modal', $.proxy(this.close, this));
 
-				$('.' + this.settings.modalName +', .'+ this.settings.overlayName).on('click.okModal', $.proxy(function(e) {
+				$('.' + this.settings.modalName +', .'+ this.settings.overlayName).on('click.modal', $.proxy(function(e) {
 					var $this = $(e.target);
 
 					if ( ! $this.parents().is('.' + this.settings.modalName + '-inside') && ! $this.is('.' + this.settings.modalName + '-inside')) {
@@ -192,13 +192,13 @@
 					overlay.remove();
 
 					// Remove event bindings
-					$('.' + this.settings.closeModalName, modal).off('.okModal');
-					modal.off('.okModal');
-					overlay.off('.okModal');
+					$('.' + this.settings.closeModalName, modal).off('.modal');
+					modal.off('.modal');
+					overlay.off('.modal');
 
 					if( ! $('.ok-modal').length ) {
-						$(window).off('.okModal');
-						$(document).off('.okModal');
+						$(window).off('.modal');
+						$(document).off('.modal');
 					}
 				},this));
 
@@ -435,7 +435,7 @@
 	}
 
 	/* Initialize Plugin */
-	$.fn.okModal = function( options ) {
+	$.fn.modal = function( options ) {
 
 		// If modal initialized with settings
 		if ( typeof(options) === 'object' || typeof(options) === 'undefined' ) {
@@ -444,13 +444,13 @@
 			return this.each(function(){
 
 				// Set settings
-				var settings = $.extend(true, {}, $.fn.okModal.defaults, options);
+				var settings = $.extend(true, {}, $.fn.modal.defaults, options);
 
 				// Create object
-				var okModal = new OkModal(this, settings);
+				var modal = new Modal(this, settings);
 
 				// Add object reference to the selector
-				$(this).data('okModal', okModal);
+				$(this).data('modal', modal);
 
 				// return for chaining
 				return this;
@@ -464,7 +464,7 @@
 			return this.each(function() {
 
 				// Set reference to selectors object
-				var data = $(this).data('okModal');
+				var data = $(this).data('modal');
 
 				// Make sure the data is an object
 				if( typeof data === 'object' ) {
@@ -490,25 +490,25 @@
 	};
 
 	/* Initialize Plugin without selector */
-	$.okModal = function( options ) {
+	$.modal = function( options ) {
 
 		// If modal initialized with settings
 		if ( typeof(options) === 'object' || typeof(options) === 'undefined' ) {
 
 			// Set settings
-			var settings = $.extend(true, {}, $.fn.okModal.defaults, options);
+			var settings = $.extend(true, {}, $.fn.modal.defaults, options);
 
 			// Create object
-			var okModal = new OkModal(false, settings);
+			var modal = new Modal(false, settings);
 
 			// Add object reference to the selector
-			$(document).data('okModal', okModal);
+			$(document).data('modal', modal);
 
 		// If modal initialized with a method call
 		} else if ( typeof options === 'string' ) {
 
 			// Set reference to selectors object
-			var data = $(document).data('okModal');
+			var data = $(document).data('modal');
 
 			// Make sure the data is an object
 			if( typeof data === 'object' ) {
@@ -529,10 +529,10 @@
 	};
 
 	/* Set options obj */
-	$.fn.okModal.defaults = {
-		modalName 				: 'ok-modal',
-		loaderName 				: 'ok-modal-loader',
-		overlayName 			: 'ok-modal-overlay',
+	$.fn.modal.defaults = {
+		modalName 				: 'modal',
+		loaderName 				: 'modal-loader',
+		overlayName 			: 'modal-overlay',
 		closeModalName 			: 'close-modal',
 		loadInsideName 			: 'load-inside',
 		modalSkin 				: 'default',

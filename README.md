@@ -1,4 +1,4 @@
-# OkModal v1.15
+# OkModal v1.15.3
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
@@ -14,7 +14,7 @@ Add to your project's `bower.json` file, like:
   "version": "1.0.0",
   "dependencies": {
     "jquery": "1.11.0",
-    "fillselect": "git@github.com:mpetty/ok-modal"
+    "fillselect": "git@github.com:mpetty/modal"
   }
 }
 ```
@@ -22,21 +22,21 @@ Add to your project's `bower.json` file, like:
 ## Usage
 
 ```javascript
-$('a').okModal(options);
+$('a').modal(options);
 ```
 
 You can also open it without assigning it to a dom element.
 
 ```javascript
-$.okModal(options);
+$.modal(options);
 ```
 
 ## Options available
 
 ```javascript
-modalName               : 'ok-modal',
-loaderName              : 'ok-modal-loader',
-overlayName             : 'ok-modal-overlay',
+modalName               : 'modal',
+loaderName              : 'modal-loader',
+overlayName             : 'modal-overlay',
 closeModalName          : 'close-modal',
 loadInsideName          : 'load-inside',
 modalSkin               : 'default',

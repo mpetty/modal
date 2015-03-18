@@ -6,17 +6,17 @@ module.exports = function(grunt) {
 		concat: {
 			dist: {
 				src: [
-					'src/jquery.okModal.js'
+					'src/jquery.modal.js'
 				],
-				dest: 'jquery.okModal.min.js',
+				dest: 'jquery.modal.min.js',
 			}
 		},
 
 		uglify: {
 			dist: {
 				files: {
-					'jquery.okModal.min.js' : [
-						'jquery.okModal.min.js'
+					'jquery.modal.min.js' : [
+						'jquery.modal.min.js'
 					]
 				}
 			}
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 					update: true
 				},
 				files: {
-					'okModal.min.css': 'src/okModal.scss'
+					'modal.min.css': 'src/modal.scss'
 				}
 			}
 		},

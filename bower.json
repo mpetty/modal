@@ -1,8 +1,12 @@
 {
-	"name": "OkModal",
-	"version": "1.15.2",
+	"name": "modal",
+
+	"version": "1.15.3",
+
 	"license": "MIT",
+
 	"private": true,
+
 	"ignore": [
 		"**/.*",
 		"node_modules",
@@ -13,10 +17,12 @@
 		"Gruntfile.js",
 		"readme.md"
 	],
+
   	"main": [
-  		"jquery.okModal.min.js",
-  		"okModal.min.css"
+  		"jquery.modal.min.js",
+  		"modal.min.css"
   	],
+
 	"dependencies": {
 		"jquery": ">=1.7.0"
 	}
