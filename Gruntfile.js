@@ -55,7 +55,10 @@ module.exports = function(grunt) {
 			dist: {
 				options: {
 					style: 'compressed',
-					sourcemap: 'none'
+					sourcemap: 'none',
+					compass: false,
+					lineNumbers: true,
+					update: true
 				},
 				files: {
 					'okModal.min.css': 'src/okModal.scss'
