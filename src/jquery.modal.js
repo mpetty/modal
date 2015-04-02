@@ -385,7 +385,7 @@
 					this.modal.removeClass('centered fixed').addClass('static').css({
 						'top' : 0,
 						'marginTop' : scrollTop,
-						'marginBottom' : 0
+						'marginBottom' : margin
 					});
 				}
 
