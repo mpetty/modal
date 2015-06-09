@@ -1,8 +1,13 @@
-# Modal v1.15.31
+# Modal v1.15.4
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+## new in 1.15.4
+
+Removed a ton of options
+Ajax option now gets injected directly into the ajax request so you can use all of jquerys ajax options except success, error, and complete.
 
 ## Bower Installation
 
@@ -25,7 +30,7 @@ Add to your project's `bower.json` file, like:
 $('a').modal(options);
 ```
 
-You can also open it without assigning it to a dom element.
+You can also open it without assigning it to an element.
 
 ```javascript
 $.modal(options);
@@ -35,6 +40,7 @@ $.modal(options);
 
 ```javascript
 modalName               : 'modal',
+modalContentName        : 'modal-dialog',
 loaderName              : 'modal-loader',
 overlayName             : 'modal-overlay',
 closeModalName          : 'close-modal',
@@ -49,20 +55,8 @@ modalWidth              : 800,
 insideMarkup            : false,
 autoOpen                : false,
 allowClose              : true,
-eventDelegation         : false,
-delegatedSelector       : false,
 closeOnDocumentClick    : true,
-
-iframe                  : false,
-iframeWrap              : '<div class="modal-wrap" />',
-
 ajax                    : false,
-ajaxType                : 'GET',
-ajaxFragment            : false,
-ajaxUrl                 : false,
-ajaxData                : false,
-ajaxGlobal              : true,
-ajaxSettings            : {},
 
 afterInit               : function() {},
 afterOpen               : function() {},
@@ -73,4 +67,3 @@ afterAjaxComplete       : function() {},
 afterAjaxError          : function() {},
 onBeforeClose           : function() {}
 ```
-
