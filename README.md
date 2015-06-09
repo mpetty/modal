@@ -7,6 +7,7 @@ Library for opening content in a modal window. Built to be used with web applica
 ## new in 1.15.4
 
 Removed a ton of options
+
 Ajax option now gets injected directly into the ajax request so you can use all of jquerys ajax options except success, error, and complete.
 
 ## Bower Installation
