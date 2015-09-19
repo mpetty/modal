@@ -279,6 +279,10 @@
 		// Update container
 		this.$container.css({'position' : 'relative'});
 
+		if(!this.settings.centered) {
+			this.$modal.css({'marginTop':-this.$modal.height()});
+		}
+
 		// Add classes
 		if( ! this.settings.allowClose )  $('.' + this.settings.modalName, markup).addClass('no-close');
 		if( this.settings.container === 'body' ) markup.addClass('fixed');
