@@ -260,8 +260,7 @@
 
 				this.$modal.removeClass('centered fixed').addClass('static').css({
 					'top' : 0,
-					'marginTop' : scrollTop,
-					'marginBottom' : '50px'
+					'marginTop' : scrollTop
 				});
 			}
 
