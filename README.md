@@ -1,10 +1,14 @@
-# Modal v1.15.4
+# Modal v1.15.5
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
 
-## new in 1.15.4
+### new in 1.15.5
+
+Removed bottom margin from modal
+
+### new in 1.15.4
 
 Removed a ton of options
 
