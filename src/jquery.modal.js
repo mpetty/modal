@@ -186,7 +186,7 @@
 		if( this.$modal.is(':hidden') ) {
 			if(!this.settings.centered) {
 				this.$modal.css({'marginTop':-this.$modal.height()});
-				this.$modal.hide().animate({'opacity':'show', 'marginTop':this.settings.centeredOffset}, this.settings.animSpeed, $.proxy(this.events,this));
+				this.$modal.hide().animate({'opacity':'show', 'marginTop':0}, this.settings.animSpeed, $.proxy(this.events,this));
 				this.$overlay.hide().animate({'opacity':'show'}, this.settings.animSpeed);
 			} else {
 				this.$modal.hide().animate({'opacity':'show'}, this.settings.animSpeed, $.proxy(this.events,this));
@@ -408,7 +408,6 @@
 		modalSkin 				: 'default',
 		container 				: 'body',
 		centered				: true,
-		centeredOffset			: 50,
 		fixed 					: true,
 		animSpeed 				: 150,
 		modalWidth 				: 800,
