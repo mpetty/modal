@@ -218,12 +218,11 @@
 		var windowWidth = $(window).width();
 		var modalMargin = false;
 		var scrollTop, contentHeight, contentWidth;
-		var margin = (!this.settings.centered) ? this.settings.centeredOffset : 0;
+		var margin = 0;
 
 		// Set modal dimensions
 		contentWidth = this.$modalInside.outerWidth();
 		contentHeight = this.$modal.outerHeight();
-		contentHeight = (!this.settings.centered) ? this.$modal.outerHeight() + (margin*2) : this.$modal.outerHeight();
 
 		// Center and fixed if smaller than window
 		if( contentHeight < windowHeight && windowWidth > contentWidth ) {
@@ -245,9 +244,7 @@
 				}
 			} else {
 				this.$modal.removeClass('centered static').addClass('fixed').css({
-					'top' : 0,
-					'marginTop' : margin,
-					'marginBottom' : margin
+					'top' : 0
 				});
 			}
 
