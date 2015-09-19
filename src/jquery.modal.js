@@ -141,7 +141,7 @@
 			self.$loader.animate({'opacity':'hide'}, self.settings.animSpeed, function() {
 
 				// append markup
-				if(! self.settings.centered) self.$modal.css({'marginTop': -self.$modal.height()}).hide().animate({'opacity':'show','marginTop':self.settings.centeredOffset},self.settings.animSpeed+100, $.proxy(self.adjustModal,self));
+				if(! self.settings.centered) self.$modal.css({'marginTop': -self.$modal.height()}).hide().animate({'opacity':'show','marginTop':0},self.settings.animSpeed+100, $.proxy(self.adjustModal,self));
 				self.$modalInside.empty().append($(data)).hide().animate({'opacity':'show'},self.settings.animSpeed);
 
 				// after load
