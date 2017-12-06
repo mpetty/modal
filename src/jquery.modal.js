@@ -1,11 +1,22 @@
 /*!
  *	Name:		Modal
  *	Author: 	Mitchell Petty <https://github.com/mpetty/modal>
- * 	Version: 	1.15.5
+ * 	Version: 	1.15.6
  *	Notes: 		Requires jquery 1.7+
  */
-(function($) {
-"use strict";
+(function(factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD (Register as an anonymous module)
+		define(['jquery'], factory);
+	} else if (typeof exports === 'object') {
+		// Node/CommonJS
+		module.exports = factory(require('jquery'));
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
+}(function ($) {
+    "use strict";
 
 	var Modal = function( selector, settings ) {
 		this.settings 				= settings;
@@ -431,4 +442,4 @@
 		onBeforeClose 			: $.noop
 	};
 
-})(jQuery);
+}));
