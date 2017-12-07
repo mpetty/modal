@@ -1,6 +1,7 @@
 {
   "name": "modal",
   "version": "1.15.6",
+  "main": "src/jquery.modal.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:mpetty/modal.git"
