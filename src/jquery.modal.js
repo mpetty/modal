@@ -67,6 +67,9 @@
 			$('.' + this.settings.closeModalName, this.$modal).hide();
 		}
 
+        // Add open class
+        $('body').addClass('modal-open');
+
 		// Callback
 		this.settings.afterInit.call(this, $(this.$selector));
 
@@ -119,6 +122,9 @@
 					$(document).off('.modal');
 				}
 			},this));
+
+            // Remove open class
+            $('body').removeClass('modal-open');
 
 			// Callback
 			this.settings.afterClose.call(this, $(this.$selector));
@@ -206,7 +212,7 @@
 		this.adjustModal();
 
 		// Auto focus
-		this.$modal.find('[autofocus]').focus();
+        this.$modal.find('[autofocus]').focus();
 
 		// Callback
 		this.settings.afterLoad.call(this, $(this.$selector));
@@ -409,8 +415,8 @@
 
 	/* Set options obj */
 	$.fn.modal2.defaults = {
-		modalName 				: 'modal',
-		modalContentName		: 'modal-dialog',
+		modalName 				: 'modal-window',
+		modalContentName		: 'modal-container',
 		loaderName 				: 'modal-loader',
 		overlayName 			: 'modal-overlay',
 		closeModalName 			: 'close-modal',
