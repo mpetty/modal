@@ -1,8 +1,12 @@
-# Modal v1.15.6
+# Modal v1.16.0
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+### new in 1.16.0
+
+Modal function name changed to $.modal2 to avoid conflict with bootstrap modal
 
 ### new in 1.15.5
 
@@ -24,7 +28,7 @@ Add to your project's `bower.json` file, like:
   "version": "1.0.0",
   "dependencies": {
     "jquery": "1.11.0",
-    "fillselect": "git@github.com:mpetty/modal"
+    "modal": "git@github.com:mpetty/modal"
   }
 }
 ```
@@ -32,13 +36,13 @@ Add to your project's `bower.json` file, like:
 ## Usage
 
 ```javascript
-$('a').modal(options);
+$('a').modal2(options);
 ```
 
 You can also open it without assigning it to an element.
 
 ```javascript
-$.modal(options);
+$.modal2(options);
 ```
 
 ## Options available
