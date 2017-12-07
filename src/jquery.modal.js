@@ -4,18 +4,13 @@
  * 	Version: 	1.15.6
  *	Notes: 		Requires jquery 1.7+
  */
-(function(factory) {
-	if (typeof define === 'function' && define.amd) {
-		// AMD (Register as an anonymous module)
-		define(['jquery'], factory);
-	} else if (typeof exports === 'object') {
-		// Node/CommonJS
-		module.exports = factory(require('jquery'));
-	} else {
-		// Browser globals
-		factory(jQuery);
-	}
-}(function ($) {
+ (function(factory) {
+ 	if (typeof exports === 'object') {
+ 		module.exports = factory(jQuery);
+ 	} else {
+ 		factory(jQuery);
+ 	}
+ }(function ($) {
     "use strict";
 
 	var Modal = function( selector, settings ) {
@@ -319,7 +314,7 @@
 	};
 
 	/* Initialize Plugin */
-	$.fn.modal = function( options ) {
+	$.fn.modal2 = function( options ) {
 
 		// If modal initialized with settings
 		if ( typeof(options) === 'object' || typeof(options) === 'undefined' ) {
@@ -328,7 +323,7 @@
 			return this.each(function(){
 
 				// Set settings
-				var settings = $.extend(true, {}, $.fn.modal.defaults, options);
+				var settings = $.extend(true, {}, $.fn.modal2.defaults, options);
 
 				// Create object
 				var modal = new Modal(this, settings);
@@ -374,13 +369,13 @@
 	};
 
 	/* Initialize Plugin without selector */
-	$.modal = function( options ) {
+	$.modal2 = function( options ) {
 
 		// If modal initialized with settings
 		if ( typeof(options) === 'object' || typeof(options) === 'undefined' ) {
 
 			// Set settings
-			var settings = $.extend(true, {}, $.fn.modal.defaults, options);
+			var settings = $.extend(true, {}, $.fn.modal2.defaults, options);
 
 			// Create object
 			var modal = new Modal(false, settings);
@@ -413,7 +408,7 @@
 	};
 
 	/* Set options obj */
-	$.fn.modal.defaults = {
+	$.fn.modal2.defaults = {
 		modalName 				: 'modal',
 		modalContentName		: 'modal-dialog',
 		loaderName 				: 'modal-loader',
@@ -441,5 +436,4 @@
 		afterAjaxError 			: $.noop,
 		onBeforeClose 			: $.noop
 	};
-
 }));
