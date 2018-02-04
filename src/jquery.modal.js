@@ -4,13 +4,16 @@
  * 	Version: 	1.16.0
  *	Notes: 		Requires jquery 1.7+
  */
- (function(factory) {
- 	if (typeof exports === 'object') {
- 		module.exports = factory(jQuery);
+(function(factory) {
+    "use strict";
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else if (typeof module === "object" && typeof module.exports === "object") {
+ 		module.exports = factory(require('jquery'));
  	} else {
- 		factory(jQuery);
+ 		factory(window.jQuery);
  	}
- }(function ($) {
+}(function ($) {
     "use strict";
 
 	var Modal = function( selector, settings ) {
