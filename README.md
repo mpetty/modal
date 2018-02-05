@@ -7,9 +7,13 @@ Library for opening content in a modal window. Built to be used with web applica
 ### new in 1.17.0
 
 Added module support
+
 Cleaned up default options
+
 Cleaned up js styles to use css
+
 Use bootstrap default styles for modal
+
 Bind to default data elements on document ready
 
 ## Installation
