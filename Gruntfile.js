@@ -8,15 +8,15 @@ module.exports = function(grunt) {
 				src: [
 					'src/jquery.modal.js'
 				],
-				dest: 'jquery.modal.min.js',
+				dest: 'dist/jquery.modal.min.js',
 			}
 		},
 
 		uglify: {
 			dist: {
 				files: {
-					'jquery.modal.min.js' : [
-						'jquery.modal.min.js'
+					'dist/jquery.modal.min.js' : [
+						'dist/jquery.modal.min.js'
 					]
 				}
 			}
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 					update: true
 				},
 				files: {
-					'modal.min.css': 'src/modal.scss'
+					'dist/modal.min.css': 'src/modal.scss'
 				}
 			}
 		},
