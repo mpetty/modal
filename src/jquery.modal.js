@@ -340,23 +340,23 @@
 
     // Set options obj
     $.fn.modal2.defaults = {
-        closeModalName             : '[data-dismiss="modal2"]',
+        closeModalName          : '[data-dismiss="modal2"]',
         dataTrigger             : '[data-toggle="modal2"]',
         backdropName            : 'modal-backdrop',
-        modalDialogName            : 'modal-dialog',
+        modalDialogName         : 'modal-dialog',
         modalContentName        : 'modal-content',
-        modalSkin                 : 'default',
-        modalName                 : 'modal',
-        container                 : 'body',
-        html                     : false,
-        ajax                     : false,
-        width                     : false,
+        modalSkin               : 'default',
+        modalName               : 'modal',
+        container               : 'body',
+        html                    : false,
+        ajax                    : false,
+        width                   : false,
         centered                : false,
-        allowClose                 : true,
-        afterInit                 : $.noop,
-        afterOpen                 : $.noop,
-        afterClose                 : $.noop,
-        onBeforeClose             : $.noop
+        allowClose              : true,
+        afterInit               : $.noop,
+        afterOpen               : $.noop,
+        afterClose              : $.noop,
+        onBeforeClose           : $.noop
     };
 
     // Auto bind to trigger
