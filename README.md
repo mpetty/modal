@@ -41,21 +41,21 @@ $.modal2(options);
 ## Options available
 
 ```javascript
-closeModalName 			: '[data-dismiss="modal2"]',
-dataTrigger 			: '[data-toggle="modal2"]',
-backdropName            : 'modal-backdrop',
-modalDialogName		    : 'modal-dialog',
-modalContentName		: 'modal-content',
-modalSkin 				: 'default',
-modalName 				: 'modal',
-container 				: 'body',
-html 			        : false,
-ajax 					: false,
-width 				    : false,
-centered				: false,
-allowClose 				: true,
-afterInit 				: $.noop,
-afterOpen 				: $.noop,
-afterClose 				: $.noop,
-onBeforeClose 			: $.noop
+closeModalName     : '[data-dismiss="modal2"]',
+dataTrigger        : '[data-toggle="modal2"]',
+backdropName       : 'modal-backdrop',
+modalDialogName    : 'modal-dialog',
+modalContentName   : 'modal-content',
+modalSkin          : 'default',
+modalName          : 'modal',
+container          : 'body',
+html               : false,
+ajax               : false,
+width              : false,
+centered           : false,
+allowClose         : true,
+afterInit          : $.noop,
+afterOpen          : $.noop,
+afterClose         : $.noop,
+onBeforeClose      : $.noop
 ```
