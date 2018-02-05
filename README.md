@@ -7,9 +7,13 @@ Library for opening content in a modal window. Built to be used with web applica
 ### new in 1.17.0
 
 Added module support
+
 Cleaned up default options
+
 Cleaned up js styles to use css
+
 Use bootstrap default styles for modal
+
 Bind to default data elements on document ready
 
 ## Installation
@@ -37,21 +41,21 @@ $.modal2(options);
 ## Options available
 
 ```javascript
-closeModalName 			: '[data-dismiss="modal2"]',
-dataTrigger 			: '[data-toggle="modal2"]',
-backdropName            : 'modal-backdrop',
-modalDialogName		    : 'modal-dialog',
-modalContentName		: 'modal-content',
-modalSkin 				: 'default',
-modalName 				: 'modal',
-container 				: 'body',
-html 			        : false,
-ajax 					: false,
-width 				    : false,
-centered				: false,
-allowClose 				: true,
-afterInit 				: $.noop,
-afterOpen 				: $.noop,
-afterClose 				: $.noop,
-onBeforeClose 			: $.noop
+closeModalName     : '[data-dismiss="modal2"]',
+dataTrigger        : '[data-toggle="modal2"]',
+backdropName       : 'modal-backdrop',
+modalDialogName    : 'modal-dialog',
+modalContentName   : 'modal-content',
+modalSkin          : 'default',
+modalName          : 'modal',
+container          : 'body',
+html               : false,
+ajax               : false,
+width              : false,
+centered           : false,
+allowClose         : true,
+afterInit          : $.noop,
+afterOpen          : $.noop,
+afterClose         : $.noop,
+onBeforeClose      : $.noop
 ```
