@@ -1,8 +1,8 @@
 /*!
  *    Name:        Modal
- *    Author:     Mitchell Petty <https://github.com/mpetty/modal>
- *     Version:     1.17.0
- *    Notes:         Requires jquery 1.7+
+ *    Author:      Mitchell Petty <https://github.com/mpetty/modal>
+ *    Version:     1.17.0
+ *    Notes:       Requires jquery 1.7+
  */
 (function(factory) {
     "use strict";
