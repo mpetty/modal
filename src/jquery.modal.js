@@ -57,41 +57,39 @@
 	Modal.prototype.show = function(e) {
 
         // Prevent default action
-		if( typeof e === 'object'  && e.preventDefault) {
+		if(typeof e === 'object'  && e.preventDefault) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
-		// Append markup
-		this.appendMarkup();
-
 		// Load via content options
 		if(this.settings.html) {
-			this.$modalInside
-                .empty()
-                .append(this.settings.html);
-
+            this.append(this.settings.html);
 			this.open();
+            this.settings.afterInit.call(this, $(this.$selector));
 
         // Load via selector target
         } else if($(this.$selector).data('target')) {
-			this.$modalInside
-                .empty()
-                .append($($(this.$selector).data('target')).html());
-
+            this.append($($(this.$selector).data('target')).html());
 			this.open();
+            this.settings.afterInit.call(this, $(this.$selector));
 
         // Load via ajax options
-		} else if(this.ajax && typeof this.settings.ajax.url === 'string') {
+		} else if(this.settings.ajax && typeof this.settings.ajax.url === 'string') {
+            this.append();
 			this.load(this.settings.ajax.url);
+            this.settings.afterInit.call(this, $(this.$selector));
 
         // Load via selector href
 		} else if($(this.$selector).attr('href')) {
+            this.append();
 			this.load($(this.$selector).attr('href'));
-		}
+            this.settings.afterInit.call(this, $(this.$selector));
 
-		// Callback
-		this.settings.afterInit.call(this, $(this.$selector));
+        // Nothing loaded, exit modal
+        } else {
+            this.close();
+        }
 
 	};
 
@@ -144,7 +142,6 @@
 
 		var self = this,
 			ajaxOptions = $.extend({}, this.settings.ajax);
-
 
 		// added loading class
         this.$modalInside.addClass('loading');
@@ -252,7 +249,7 @@
 
 	};
 
-	Modal.prototype.appendMarkup = function() {
+	Modal.prototype.append = function(html) {
 
         // Remove old modal
 		var $modal = $('.'+this.settings.modalName, this.$container);
@@ -264,9 +261,13 @@
         this.$overlay = $('<div class="'+this.settings.backdropName+' fade"></div>');
         this.$closeBtn = $(this.settings.closeModalName, this.$modalInside);
         this.$modalDialog.append(this.$modalInside);
-
         this.$modal = $('<div class="' + this.settings.modalName + ' modal-'+ this.settings.modalSkin +' fade" role="dialog"></div>');
         this.$modal.append(this.$modalDialog);
+
+        // Append modal content
+        if(html) {
+            this.$modalInside.empty().append(html);
+        }
 
 		// Center container
 		if(!this.settings.centered) {
