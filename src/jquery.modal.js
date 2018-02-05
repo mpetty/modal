@@ -36,7 +36,7 @@
 	};
 
 	Modal.prototype.addEvents = function() {
-        var self = this;
+    	var self = this;
 
         $(this.settings.closeModalName).on('click.'+this.namespace, $.proxy(this.close, this));
         $(document).on('keydown.'+this.namespace, $.proxy(this.close, this));
