@@ -6,13 +6,14 @@
  */
 (function(factory) {
     "use strict";
-    if (typeof define === 'function' && define.amd) {
+
+    if (typeof module === "object" && typeof module.exports === "object") {
+        module.exports = factory(require('jquery'));
+    } else if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
-    } else if (typeof module === "object" && typeof module.exports === "object") {
-         module.exports = factory(require('jquery'));
-     } else {
-         factory(window.jQuery);
-     }
+    } else {
+        factory(window.jQuery);
+    }
 }(function($) {
     "use strict";
 
