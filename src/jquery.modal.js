@@ -122,8 +122,8 @@
         // Destroy the modal
         if(this.settings.allowClose || type === 'closeModal' || type === 'ajaxComplete') {
             this.settings.onBeforeClose.call(this, $(this.$selector));
-            this.$overlay.removeClass('show');
-            this.$modal.removeClass('show');
+            this.$overlay.removeClass('show in');
+            this.$modal.removeClass('show in');
             this.modalOpen = false;
 
             this.$modal.animate({top: -(this.$modal.outerHeight(true)*2)}, function() {
@@ -145,8 +145,8 @@
 
         // added loading class
         this.$modalInside.addClass('loading');
-        this.$overlay.addClass('show');
-        this.$modal.addClass('show');
+        this.$overlay.addClass('show in');
+        this.$modal.addClass('show in');
 
         // Set loading styles
         this.$modalInside.css({
@@ -217,12 +217,12 @@
             });
 
             setTimeout(function() {
-                self.$overlay.addClass('show');
-                self.$modal.css({'marginTop':0}).addClass('show');
+                self.$overlay.addClass('show in');
+                self.$modal.css({'marginTop':0}).addClass('show in');
             }, 10);
         } else {
-            this.$overlay.addClass('show');
-            this.$modal.addClass('show');
+            this.$overlay.addClass('show in');
+            this.$modal.addClass('show in');
         }
 
         // Add open class
