@@ -158,10 +158,6 @@
             width: '100%'
         });
 
-        // Update headers
-        if(!ajaxOptions.headers) ajaxOptions.headers = {};
-        ajaxOptions.headers['X-Requested-With'] = 'Modal';
-
         // Send request for content
         ajaxOptions.success = function(data, status, ajaxObj) {
             self.$modalInside
