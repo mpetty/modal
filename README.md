@@ -14,8 +14,6 @@ Cleaned up js styles to use css
 
 Use bootstrap default styles for modal
 
-Bind to default data elements on document ready
-
 ## Installation
 
 Add to your project's `package.json` file, like:
@@ -42,7 +40,6 @@ $.modal2(options);
 
 ```javascript
 closeModalName     : '[data-dismiss="modal2"]',
-dataTrigger        : '[data-toggle="modal2"]',
 backdropName       : 'modal-backdrop',
 modalDialogName    : 'modal-dialog',
 modalContentName   : 'modal-content',

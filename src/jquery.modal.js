@@ -338,7 +338,6 @@
     // Set options obj
     $.fn.modal2.defaults = {
         closeModalName          : '[data-dismiss="modal2"]',
-        dataTrigger             : '[data-toggle="modal2"]',
         backdropName            : 'modal-backdrop',
         modalDialogName         : 'modal-dialog',
         modalContentName        : 'modal-content',
@@ -355,13 +354,6 @@
         afterClose              : $.noop,
         onBeforeClose           : $.noop
     };
-
-    // Auto bind to trigger
-    if($.fn.modal2.defaults.dataTrigger) {
-        $(function() {
-            $($.fn.modal2.defaults.dataTrigger).modal2();
-        });
-    }
 
     // return for module loader
     return $.modal2;
