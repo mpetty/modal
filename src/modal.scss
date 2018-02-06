@@ -44,7 +44,7 @@ $loadInsideName: 'load-inside';
 		transition: opacity 0.15s linear;
 	}
 
-	&.fade .#{$modalDialogName} {
+	&.fade {
 		transition: -webkit-transform 0.3s ease-out;
 		transition: transform 0.3s ease-out;
 		transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
@@ -52,7 +52,8 @@ $loadInsideName: 'load-inside';
 		transform: translate(0, -25%);
 	}
 
-	&.show .#{$modalDialogName} {
+    &.fade.show,
+	&.show {
 		-webkit-transform: translate(0, 0);
 		transform: translate(0, 0);
 	}
@@ -99,6 +100,7 @@ $loadInsideName: 'load-inside';
 		opacity: 0;
 	}
 
+    &.fade.show,
 	&.show {
 		opacity: 0.5;
 	}
