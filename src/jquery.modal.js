@@ -43,7 +43,6 @@
         $(document).on('keydown.'+this.namespace, $.proxy(this.close, this));
 
         $(document).on('click.' + this.namespace, function(e) {
-            console.log('test');
             self.close();
         });
 
