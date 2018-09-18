@@ -42,17 +42,21 @@
         $(this.settings.closeModalName).on('click.'+this.namespace, $.proxy(this.close, this));
         $(document).on('keydown.'+this.namespace, $.proxy(this.close, this));
 
-        this.$modal.on('click.'+this.namespace, function(e) {
-            if(!$(e.target).parents('.'+self.settings.modalContentName).length) {
-                self.close();
-            }
+        $(document).on('click.' + this.namespace, function(e) {
+            console.log('test');
+            self.close();
+        });
+
+        this.$modalInside.on('click.'+this.namespace, function(e) {
+            e.stopPropagation();
         });
     };
 
     Modal.prototype.removeEvents = function() {
         $(this.settings.closeModalName).off('.'+this.namespace);
+        this.$modalInside.off('.'+this.namespace);
+        this.$modal.off('.' + this.namespace);
         $(document).off('.'+this.namespace);
-        this.$modal.off('.'+this.namespace);
     };
 
     Modal.prototype.show = function(e) {
