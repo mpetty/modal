@@ -42,12 +42,10 @@
         $(this.settings.closeModalName).on('click.'+this.namespace, $.proxy(this.close, this));
         $(document).on('keydown.'+this.namespace, $.proxy(this.close, this));
 
-        $(document).on('click.' + this.namespace, function(e) {
-            self.close();
-        });
-
-        this.$modalInside.on('click.'+this.namespace, function(e) {
-            e.stopPropagation();
+        this.$modal.on('click.' + this.namespace, function (e) {
+            if (!$(e.target).closest('.' + self.settings.modalContentName).length) {
+                self.close();
+            }
         });
     };
 
