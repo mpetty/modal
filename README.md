@@ -1,8 +1,12 @@
-# Modal v1.17.0
+# Modal v1.17.1
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+### new in 1.17.1
+
+Added support for nested modals. Modal windows will get appended after the last. when nested modals are closed, the previous modal will be displayed until the last one is closed which will destroy the modal elements.
 
 ### new in 1.17.0
 
