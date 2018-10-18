@@ -72,6 +72,7 @@ $loadInsideName: 'load-inside';
 
 .#{$modalContentName} {
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);;
+    will-change: width, height, opacity;
     transition: all .2s ease-in-out;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
@@ -87,6 +88,15 @@ $loadInsideName: 'load-inside';
 	display: flex;
     width: 100%;
 	outline: 0;
+
+	&.loading {
+		background: #fff;
+		max-height: 50px;
+		max-width: 50px;
+		margin: 0 auto;
+		height: 100%;
+		width: 100%;
+	}
 }
 
 .#{$backdropName} {

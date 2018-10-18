@@ -159,25 +159,11 @@
         this.$overlay.addClass('show in');
         this.$modal.addClass('show in');
 
-        // Set loading styles
-        this.$modalInside.css({
-            background: '#fff',
-            maxHeight: '50px',
-            maxWidth: '50px',
-            margin: '0 auto',
-            height: '100%',
-            width: '100%'
-        });
-
         // Send request for content
         ajaxOptions.success = function (data, status, ajaxObj) {
             self.$modalInside
                 .empty()
-                .append(data)
-                .css({
-                    'maxHeight': '2000px',
-                    'maxWidth': '2000px'
-                });
+                .append(data);
 
             self.open();
 
