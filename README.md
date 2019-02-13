@@ -1,8 +1,12 @@
-# Modal v1.17.1
+# Modal v1.17.2
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+### new in 1.17.2
+
+Added option for preventing modal close when clicking outside of the modal
 
 ### new in 1.17.1
 
@@ -55,6 +59,7 @@ ajax               : false,
 width              : false,
 centered           : false,
 allowClose         : true,
+allowCloseOverlay  : true,
 afterInit          : $.noop,
 afterOpen          : $.noop,
 afterClose         : $.noop,

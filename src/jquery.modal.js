@@ -42,11 +42,13 @@
         $(this.settings.closeModalName).on('click.' + this.namespace, $.proxy(this.close, this));
         $(document).on('keydown.' + this.namespace, $.proxy(this.close, this));
 
-        this.$modal.on('click.' + this.namespace, function (e) {
-            if (!$(e.target).closest('.' + self.settings.modalContentName).length) {
-                self.close();
-            }
-        });
+        if (this.settings.allowCloseOverlay) {
+            this.$modal.on('click.' + this.namespace, function (e) {
+                if (!$(e.target).closest('.' + self.settings.modalContentName).length) {
+                    self.close();
+                }
+            });
+        }
     };
 
     Modal.prototype.removeEvents = function () {
@@ -341,21 +343,22 @@
     // Set options obj
     $.fn.modal2.defaults = {
         closeModalName: '[data-dismiss="modal2"]',
-        backdropName: 'modal-backdrop',
-        modalDialogName: 'modal-dialog',
         modalContentName: 'modal-content',
+        modalDialogName: 'modal-dialog',
+        backdropName: 'modal-backdrop',
+        allowCloseOverlay: true,
+        onBeforeClose: $.noop,
         modalSkin: 'default',
         modalName: 'modal',
+        afterClose: $.noop,
         container: 'body',
-        html: false,
-        ajax: false,
-        width: false,
-        centered: false,
-        allowClose: true,
         afterInit: $.noop,
         afterOpen: $.noop,
-        afterClose: $.noop,
-        onBeforeClose: $.noop
+        allowClose: true,
+        centered: false,
+        width: false,
+        html: false,
+        ajax: false,
     };
 
     // return for module loader
