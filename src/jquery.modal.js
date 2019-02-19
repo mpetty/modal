@@ -1,7 +1,7 @@
 /*!
  *    Name:        Modal
  *    Author:      Mitchell Petty <https://github.com/mpetty/modal>
- *    Version:     1.17.1
+ *    Version:     1.17.3
  *    Notes:       Requires jquery 1.7+
  */
 (function (factory) {
@@ -78,7 +78,7 @@
             // Use selector as modal
         } else if ($(this.$selector).is('.' + this.settings.modalName)) {
             this.staticModal = true;
-            this.append($(this.$selector)).open();
+            this.append($(this.$selector));
 
             // Load via selector target
         } else if ($(this.$selector).data('target')) {
@@ -217,7 +217,7 @@
         var self = this;
 
         // Do nothing, already open
-        if (this.modalOpen) return;
+        if (!this.$modal || this.modalOpen) return;
 
         // Set modal to open
         this.modalOpen = true;
@@ -312,61 +312,47 @@
     };
 
     // Create modal
-    var modalFactory = function (selector, options) {
-        var dataSelector = $(selector);
-        selector = dataSelector;
+    var modalFactory = function (selector, command, options) {
+        var modal, selector = $(selector);
+        options = $.extend(true, {}, $.fn.modal2.defaults, options);
 
         if (selector.is(document)) {
-            selector = false;
-        }
+            modal = new Modal(false, options);
+        } else {
+            modal = selector.data('modal');
 
-        // If modal initialized with settings
-        if (typeof (options) === 'object' || typeof (options) === 'undefined') {
-
-            // Create object
-            var modal = new Modal(selector, options);
-
-            // Add object reference to the selector
-            dataSelector.data('modal', modal);
-
-            // Return modal object
-            return modal;
-
-            // If modal initialized with a method call
-        } else if (typeof options === 'string') {
-
-            // Set reference to selectors object
-            var modal = dataSelector.data('modal');
-
-            // Make sure the data is an object
-            if (typeof modal === 'object') {
-
-                // Close Modal
-                if (options === 'close' && $.isFunction(modal.close)) {
-                    modal.close();
-                }
-
-                // Return modal object
-                return modal;
-
+            if (typeof modal !== 'object') {
+                modal = new Modal(selector, options);
+                selector.data('modal', modal);
             }
-
         }
+
+        if (command) {
+            if ((command === 'hide' || command === 'close') && $.isFunction(modal.close)) {
+                modal.close();
+
+            } else if (command === 'show' && $.isFunction(modal.open)) {
+                modal.open();
+            }
+        }
+
+        return modal;
     };
 
-    $.fn.modal2 = function (options) {
-        if (typeof options !== 'string') options = $.extend(true, {}, $.fn.modal2.defaults, options);
+    $.fn.modal2 = function (command, options) {
+        if (typeof command === 'object') {
+            options = command;
+            command = false;
+        }
 
         return this.each(function () {
-            modalFactory(this, options);
+            modalFactory(this, command, options);
             return this;
         });
     };
 
     $.modal2 = function (options) {
-        if (typeof options !== 'string') options = $.extend(true, {}, $.fn.modal2.defaults, options);
-        modalFactory(document, options);
-        return this;
+        return modalFactory(document, false, options);
     };
 
     // Increment modal ids
