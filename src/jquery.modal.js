@@ -78,7 +78,7 @@
             // Use selector as modal
         } else if ($(this.$selector).is('.' + this.settings.modalName)) {
             this.staticModal = true;
-            this.append($(this.$selector));
+            this.append();
 
             // Load via selector target
         } else if ($(this.$selector).data('target')) {
@@ -135,7 +135,7 @@
                     this.$modal.animate({ top: -(this.$modal.outerHeight(true) * 2) }, function () {
                         self.$modal.css({ top: '0' });
                         self.$modal.hide();
-                        self.$overlay.remove();
+                        self.$overlay.hide();
                         self.removeEvents();
                         self.settings.afterClose.call(self, $(self.$selector));
                     });
@@ -235,8 +235,13 @@
             });
 
             setTimeout(function () {
-                self.$overlay.addClass('show in');
-                self.$modal.css({ 'marginTop': 0 }).addClass('show in');
+                self.$overlay.addClass('show');
+                self.$modal.css({ 'marginTop': 0 }).addClass('show');
+
+                setTimeout(function () {
+                    self.$overlay.addClass('in');
+                    self.$modal.addClass('in');
+                }, 20);
             }, 10);
         } else {
             this.$overlay.addClass('show in');
@@ -259,8 +264,8 @@
 
     Modal.prototype.append = function (html) {
 
-        if ($(html).is('.' + this.settings.modalName)) {
-            this.$modal = $(html);
+        if (this.staticModal) {
+            this.$modal = $(this.$selector);
             this.$overlay = $('<div class="' + this.settings.backdropName + ' fade"></div>');
             this.$modalDialog = $('.' + this.settings.modalDialogName, this.$modal);
             this.$modalInside = $('.' + this.settings.modalContentName, this.$modal);
