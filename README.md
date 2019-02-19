@@ -7,6 +7,7 @@ Library for opening content in a modal window. Built to be used with web applica
 ### new in 1.17.3
 
 Return modal object from $.modal for easier use in code
+Added ability to use modal html as selector to directly open a modal. ex: $('.modal).modal2()
 
 ### new in 1.17.2
 
