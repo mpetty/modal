@@ -303,19 +303,25 @@
             // Add object reference to the selector
             dataSelector.data('modal', modal);
 
-            // If modal initialized with a method call
+            // Return modal object
+            return modal;
+
+        // If modal initialized with a method call
         } else if (typeof options === 'string') {
 
             // Set reference to selectors object
-            var data = dataSelector.data('modal');
+            var modal = dataSelector.data('modal');
 
             // Make sure the data is an object
-            if (typeof data === 'object') {
+            if (typeof modal === 'object') {
 
                 // Close Modal
-                if (options === 'close' && $.isFunction(data.close)) {
-                    data.close();
+                if (options === 'close' && $.isFunction(modal.close)) {
+                    modal.close();
                 }
+
+                // Return modal object
+                return modal;
 
             }
 
