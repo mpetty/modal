@@ -158,7 +158,10 @@
                         self.settings.afterClose.call(self, $(self.$selector));
                     });
                 } else {
+                    this.$modalDialog.prev('.' + this.settings.modalDialogName).show();
                     this.$modalDialog.remove();
+                    this.removeEvents();
+                    this.settings.afterClose.call(this, $(this.$selector));
                 }
             }
         }
