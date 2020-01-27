@@ -58,7 +58,7 @@ module.exports = function(grunt) {
 					sourcemap: 'none',
 					compass: false,
 					lineNumbers: true,
-					update: true
+					update: false
 				},
 				files: {
 					'dist/modal.min.css': 'src/modal.scss'
