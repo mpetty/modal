@@ -1,8 +1,12 @@
-# Modal v1.17.3
+# Modal v1.17.4
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+### new in 1.17.4
+
+Updated modal ajax to open on complete instead of success. This fixes an issue where 403 errors would prevent the modal from displaying.
 
 ### new in 1.17.3
 

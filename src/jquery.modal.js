@@ -182,18 +182,6 @@
         this.$modal.addClass('show in');
 
         // Send request for content
-        ajaxOptions.success = function (data, status, ajaxObj) {
-            self.$modalInside
-                .empty()
-                .append(data);
-
-            self.open();
-
-            if (typeof self.settings.ajax.success === 'function') {
-                self.settings.ajax.success.call(self, data, status, ajaxObj);
-            }
-        };
-
         ajaxOptions.error = function (ajaxObj, status, error) {
             self.close();
 
@@ -203,7 +191,21 @@
         };
 
         ajaxOptions.complete = function (ajaxObj, status) {
+            var data = ajaxObj.responseText;
+            
             self.$modalInside.removeClass('loading');
+
+            if (data) {
+                self.$modalInside
+                    .empty()
+                    .append(data);
+
+                self.open();
+
+                if (typeof self.settings.ajax.success === 'function') {
+                    self.settings.ajax.success.call(self, data, status, ajaxObj);
+                }
+            }
 
             if (typeof self.settings.ajax.complete === 'function') {
                 self.settings.ajax.complete.call(self, ajaxObj, status);
