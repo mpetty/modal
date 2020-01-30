@@ -192,7 +192,7 @@
 
         ajaxOptions.complete = function (ajaxObj, status) {
             var data = ajaxObj.responseText;
-            
+
             self.$modalInside.removeClass('loading');
 
             if (data) {
@@ -323,27 +323,40 @@
 
     // Create modal
     var modalFactory = function (selector, command, options) {
-        var modal, selector = $(selector);
+        var modal;
+
+        selector = $(selector);
         options = $.extend(true, {}, $.fn.modal2.defaults, options);
+        modal = selector.data('modal');
 
-        if (selector.is(document)) {
-            modal = new Modal(false, options);
-        } else {
-            modal = selector.data('modal');
-
-            if (typeof modal !== 'object') {
-                modal = new Modal(selector, options);
-                selector.data('modal', modal);
-            }
-        }
-
+        // Call command on modal
         if (command) {
-            if ((command === 'hide' || command === 'close') && $.isFunction(modal.close)) {
-                modal.close();
 
-            } else if (command === 'show' && $.isFunction(modal.open)) {
-                modal.open();
+            if (typeof modal === 'object') {
+                if ((command === 'hide' || command === 'close') && $.isFunction(modal.close)) {
+                    modal.close();
+
+                } else if (command === 'show' && $.isFunction(modal.open)) {
+                    modal.open();
+                }
             }
+
+        // Open modal or bind events
+        } else {
+
+            // no selector opens modal immediately
+            if (selector.is(document)) {
+                modal = new Modal(false, options);
+
+            // else modal opens on click event of selector
+            } else {
+                if (typeof modal !== 'object') {
+                    modal = new Modal(selector, options);
+                }
+            }
+
+            selector.data('modal', modal);
+
         }
 
         return modal;

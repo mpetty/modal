@@ -1,8 +1,12 @@
-# Modal v1.17.4
+# Modal v1.17.5
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+### new in 1.17.5
+
+Updated modal open code to allow calling commands on the document global selector
 
 ### new in 1.17.4
 
