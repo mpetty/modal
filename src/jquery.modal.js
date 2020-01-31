@@ -323,22 +323,37 @@
 
     // Create modal
     var modalFactory = function (selector, command, options) {
-        var modal;
 
-        selector = $(selector);
+        // Merge options with defaults
         options = $.extend(true, {}, $.fn.modal2.defaults, options);
-        modal = selector.data('modal');
+
+        // Create jquery object from selector
+        selector = selector ? $(selector) : false;
+
+        // Load previous modal object 
+        var modal = selector ? selector.data('modal') : false;
 
         // Call command on modal
         if (command) {
 
-            if (typeof modal === 'object') {
-                if ((command === 'hide' || command === 'close') && $.isFunction(modal.close)) {
-                    modal.close();
+            if (typeof modal !== 'object') {
+                modal = new Modal(selector, options);
+            }
 
-                } else if (command === 'show' && $.isFunction(modal.open)) {
-                    modal.open();
-                }
+            switch(command) {
+                case "hide":
+                case "close":
+                    if ($.isFunction(modal.close)) {
+                        modal.close();
+                    }
+                break;
+
+                case "open":
+                case "show":
+                    if ($.isFunction(modal.open)) {
+                        modal.open();
+                    }
+                break;
             }
 
         // Open modal or bind events
@@ -355,10 +370,9 @@
                 }
             }
 
-            selector.data('modal', modal);
-
         }
 
+        selector.data('modal', modal);
         return modal;
     };
 
