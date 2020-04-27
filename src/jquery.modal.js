@@ -1,7 +1,7 @@
 /*!
  *    Name:        Modal
  *    Author:      Mitchell Petty <https://github.com/mpetty/modal>
- *    Version:     1.17.5.1
+ *    Version:     1.17.6
  *    Notes:       Requires jquery 1.7+
  */
 (function (factory) {
