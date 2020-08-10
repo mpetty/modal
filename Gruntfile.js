@@ -60,9 +60,8 @@ module.exports = function(grunt) {
 					lineNumbers: true,
 					update: false
 				},
-				files: {
-					'dist/modal.min.css': 'src/modal.scss'
-				}
+				dest: 'dist/modal.min.css',
+				src: 'src/modal.scss'
 			}
 		},
 
@@ -93,8 +92,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-node-sass');
 
 	grunt.registerTask('default', [
 		'sass',
