@@ -42,10 +42,6 @@
 
     };
 
-    Modal.prototype.init = function (settings) {
-
-    };
-
     Modal.prototype.addEvents = function () {
 
         var self = this;
