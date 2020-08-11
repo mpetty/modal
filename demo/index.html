@@ -11,80 +11,95 @@
 	<script type='text/javascript' src='../dist/jquery.modal.min.js'></script>
 	<script>
 		$(function() {
-			// $('[data-toggle="modal2"]').modal2({
-			// 	centered: true,
-			// 	html: $('#modal-content').html()
+			// Manual initialization, this method allows modal nesting
+			// $(document).on('click', '[data-toggle="modal2"]', function(e) {
+			// 	e.preventDefault();
+
+			// 	$.modal2({
+			// 		html: $($(this).attr('href')).html(),
+			// 		centered: true
+			// 	});
 			// });
 
-			$.modal2({
-				centered: true,
-				html : $('#modal-content').html()
-			});
-
-			$(document).on('click', '[data-toggle="modal2"]', function(e) {
-				var html = $($(this).attr('href')).html();
-
-				e.preventDefault();
-
-				$.modal2({
-					html: html
-				});
-			});
-		});
+			// Auto initialization
+			$('[data-toggle="modal2"]').modal2({centered: true});
+		});	
 	</script>
 </head>
 
 <body>
 	<div class="inside">
 
-		<div id="modal-content" style="display: none;">
-			<div class="modal-header">
-				<h1>Header</h1>
-				<span class="close" data-dismiss="modal2">x</span>
-			</div>
-			<div class="modal-body">
-				<h1>HTML Ipsum Presents</h1>
+		<div id="modal-content" class="modal" style="display: none;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1>Header</h1>
+						<span class="close" data-dismiss="modal">x</span>
+					</div>
 
-				<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a data-toggle="modal2" href="#modal-content-nested">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+					<div class="modal-body">
+						<h1>HTML Ipsum Presents</h1>
 
-				<h2>Header Level 2</h2>
+						<p>
+							<strong>Pellentesque habitant morbi tristique</strong> 
+							senectus et netus et malesuada fames ac turpis egestas. 
+							Vestibulum tortor quam, feugiat vitae, ultricies eget, 
+							tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. 
+							<em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. 
+							Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat 
+							wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, 
+							wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum 
+							rutrum orci, sagittis tempus lacus enim ac dui. 
+							<a data-toggle="modal2" href="#modal-content-nested">Donec non enim</a> 
+							in turpis pulvinar facilisis. Ut felis.
+						</p>
 
-				<ol>
-				   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-				   <li>Aliquam tincidunt mauris eu risus.</li>
-				</ol>
+						<h2>Header Level 2</h2>
 
-				<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+						<ol>
+						   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+						   <li>Aliquam tincidunt mauris eu risus.</li>
+						</ol>
 
-				<h3>Header Level 3</h3>
+						<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
 
-				<ul>
-				   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-				   <li>Aliquam tincidunt mauris eu risus.</li>
-				</ul>
+						<h3>Header Level 3</h3>
 
-				<pre><code>
-				#header h1 a {
-				  display: block;
-				  width: 300px;
-				  height: 80px;
-				}
-				</code></pre>
+						<ul>
+						   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+						   <li>Aliquam tincidunt mauris eu risus.</li>
+						</ul>
+
+						<pre><code>
+						#header h1 a {
+						  display: block;
+						  width: 300px;
+						  height: 80px;
+						}
+						</code></pre>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<div id="modal-content-nested" style="display: none;">
-			<div class="modal-header">
-				<h1>Nested Content</h1>
-				<span class="close" data-dismiss="modal2">x</span>
-			</div>
-			<div class="modal-body">
-				<p>Showing how nested modals work</p>
+		<div id="modal-content-nested" class="modal" style="display: none;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1>Nested Content</h1>					
+						<span class="close" data-dismiss="modal">x</span>
+					</div>
+
+					<div class="modal-body">
+						<p>Showing how nested modals work</p>
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<div id="fragment">
-			<h1><a href="#modal-content" data-toggle="modal2" data-target="#modal-content">Open Modal</a></h1>
+			<h1><a data-target="#modal-content" href="#modal-content" data-toggle="modal2">Open Modal</a></h1>
 		</div>
 
 	</div>

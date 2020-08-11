@@ -1,8 +1,12 @@
-# Modal v1.17.6
+# Modal v1.17.7
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+### new in 1.17.7
+
+Updated the way static modals that already exist on the page are opened. Previously they would be cloned to the bottom of the page. Now they will open in place.
 
 ### new in 1.17.5
 
@@ -61,7 +65,7 @@ $.modal2(options);
 ## Options available
 
 ```javascript
-closeModalName     : '[data-dismiss="modal2"]',
+closeModalName     : '[data-dismiss="modal"]',
 backdropName       : 'modal-backdrop',
 modalDialogName    : 'modal-dialog',
 modalContentName   : 'modal-content',

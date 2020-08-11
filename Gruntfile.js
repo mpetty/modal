@@ -54,10 +54,11 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				options: {
-					style: 'compressed',
+					implementation: require('node-sass'),
+					outputStyle: 'compressed',
 					sourcemap: 'none',
-					compass: false,
 					lineNumbers: true,
+					compass: false,
 					update: false
 				},
 				files: {
@@ -93,8 +94,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-sass');
 
 	grunt.registerTask('default', [
 		'sass',
