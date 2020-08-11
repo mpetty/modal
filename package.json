@@ -1,6 +1,6 @@
 {
   "name": "modal",
-  "version": "1.17.6",
+  "version": "1.17.7",
   "main": "src/jquery.modal.js",
   "repository": {
     "type": "git",
