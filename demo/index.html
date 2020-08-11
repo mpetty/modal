@@ -12,16 +12,17 @@
 	<script>
 		$(function() {
 			// Manual initialization via click event
-			$(document).on('click', '[data-toggle="modal2"]', function(e) {
-				e.preventDefault();
+			// $(document).on('click', '[data-toggle="modal2"]', function(e) {
+			// 	e.preventDefault();
 
-				$.modal2({
-					html: $($(this).attr('href')).html()
-				});
-			});
+			// 	$.modal2({
+			// 		html: $($(this).attr('href')).html(),
+			// 		centered: true
+			// 	});
+			// });
 
 			// Auto initialization
-			// $('[data-toggle="modal2"]').modal2();
+			$('[data-toggle="modal2"]').modal2({centered: true});
 		});	
 	</script>
 </head>

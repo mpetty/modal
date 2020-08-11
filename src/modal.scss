@@ -6,16 +6,6 @@ $loaderName: 'modal-loader';
 $closeModalName: 'close';
 $loadInsideName: 'load-inside';
 
-.modal-centered {
-	min-height: calc(100% - (0.5rem * 2));
-	-webkit-box-align: center !important;
-	-ms-flex-align: center !important;
-	display: -webkit-box !important;
-	display: -ms-flexbox !important;
-	align-items: center !important;
-	display: flex !important;
-}
-
 .modal-open {
 	overflow: hidden;
 }
@@ -64,6 +54,10 @@ $loadInsideName: 'load-inside';
 
 	.#{$modalDialogName}:last-child {
 		display: block;
+
+		&.modal-centered {
+			display: flex;
+		}
 	}
 }
 
@@ -76,6 +70,16 @@ $loadInsideName: 'load-inside';
     right: 0;
     left: 0;
     top: 0;
+
+	&.modal-centered {
+		min-height: calc(100% - (0.5rem * 2));
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		align-items: center;
+		display: flex;
+	}
 }
 
 .#{$modalContentName} {
