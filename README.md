@@ -65,7 +65,7 @@ $.modal2(options);
 ## Options available
 
 ```javascript
-closeModalName     : '[data-dismiss="modal2"]',
+closeModalName     : '[data-dismiss="modal"]',
 backdropName       : 'modal-backdrop',
 modalDialogName    : 'modal-dialog',
 modalContentName   : 'modal-content',
