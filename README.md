@@ -1,8 +1,12 @@
-# Modal v1.17.7
+# Modal v1.17.8
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+### new in 1.17.8
+
+Added option for forcing deeply nested modals to force their parent to close.
 
 ### new in 1.17.7
 
@@ -72,6 +76,7 @@ modalContentName   : 'modal-content',
 modalSkin          : 'default',
 modalName          : 'modal',
 container          : 'body',
+nestedForcesClose  : false,
 html               : false,
 ajax               : false,
 width              : false,

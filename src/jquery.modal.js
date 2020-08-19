@@ -1,7 +1,7 @@
 /*!
  *    Name:        Modal
  *    Author:      Mitchell Petty <https://github.com/mpetty/modal>
- *    Version:     1.17.7
+ *    Version:     1.17.8
  *    Notes:       Requires jquery 1.7+
  */
 (function (factory) {
@@ -34,7 +34,7 @@
         if (!this.$selector || this.$selector.is('.' + settings.modalName)) {
             this.show();
 
-        // Use click events to trigger the modal
+            // Use click events to trigger the modal
         } else {
             // If selector is inside of a modal dialog, use the parent modal as the container
             if (settings.container === 'body' && this.$selector.parents('.' + settings.modalDialogName).length) {
@@ -42,8 +42,8 @@
             }
 
             $(this.$selector)
-                .off('click.'+this.namespace)
-                .on('click.'+this.namespace, $.proxy(this.show, this));
+                .off('click.' + this.namespace)
+                .on('click.' + this.namespace, $.proxy(this.show, this));
         }
 
     };
@@ -52,8 +52,8 @@
 
         var self = this;
 
-        // Some links close modals
-        $(this.settings.closeModalName).on('click.' + this.namespace, $.proxy(this.close, this));
+        // Close modal links
+        this.$modalDialog.on('click.' + this.namespace, this.settings.closeModalName, $.proxy(this.close, this));
 
         // Use esc key to close modals
         $(document).on('keydown.' + this.namespace, $.proxy(this.close, this));
@@ -74,9 +74,9 @@
 
     Modal.prototype.removeEvents = function () {
 
-        $(this.settings.closeModalName).off('.' + this.namespace);
         $(document).off('.' + this.namespace);
         this.$modal.off('.' + this.namespace);
+        this.$modalDialog.off('.' + this.namespace);
 
     };
 
@@ -94,24 +94,24 @@
             if (this.settings.html) {
                 this.append(this.settings.html).open();
 
-            // Load by passing in ajax through the options
+                // Load by passing in ajax through the options
             } else if (this.settings.ajax && typeof this.settings.ajax.url === 'string') {
                 this.load(this.settings.ajax.url);
             }
 
-        // Use the selector to find the modal
+            // Use the selector to find the modal
         } else {
 
             // If the passed in selector is a modal, use it as the modal
             if ($(this.$selector).is('.' + this.settings.modalName)) {
                 this.append(false, $(this.$selector));
 
-            // If the passed in selector has a target data attribute, use it as the modal
+                // If the passed in selector has a target data attribute, use it as the modal
             } else if ($(this.$selector).data('target')) {
 
                 this.append(false, $($(this.$selector).data('target')).first()).open();
 
-            // If the passed in selector has a href attribute, use it as the modal or to load a modal with ajax
+                // If the passed in selector has a href attribute, use it as the modal or to load a modal with ajax
             } else if ($(this.$selector).attr('href')) {
 
                 // Href is an internal hash link, use it as the target for the modal
@@ -119,7 +119,7 @@
 
                     this.append(false, $($(this.$selector).attr('href')).first()).open();
 
-                // Href is a link, load it with ajax
+                    // Href is a link, load it with ajax
                 } else {
                     this.load($(this.$selector).attr('href'));
                 }
@@ -149,10 +149,17 @@
         if (typeof e === 'object') {
             type = e.type;
 
+            // Only close on esc keydown
             if (e.type === 'keydown') {
                 if (e.keyCode !== 27 || (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey)) {
                     return;
                 }
+
+            // Only close if clicked item is directly inside of the modal
+            } else if(e.type === 'click') {
+	            if (!$(e.currentTarget).closest('.'+this.settings.modalName).is(this.$modal)) {
+	        		return;
+	            }
             }
 
             e.preventDefault();
@@ -168,9 +175,12 @@
             this.modalOpen = false;
 
             if (this.staticModal || modalCount <= 1) {
-                $('body').removeClass('modal-open');
                 this.$overlay.removeClass('show in');
                 this.$modal.removeClass('show in');
+
+                if (!this.$container.children('[data-modal2-active]').length) {
+                    this.$container.removeClass('modal-open');
+                }
 
                 this.$modal.animate({ top: -(this.$modal.outerHeight(true) * 2) }, function () {
                     self.$modal.css({ top: '0' });
@@ -203,7 +213,7 @@
 
         var
             self = this,
-            ajaxOptions = $.extend({url: url || ''}, this.settings.ajax);
+            ajaxOptions = $.extend({ url: url || '' }, this.settings.ajax);
 
         // Create modal so we can show loader
         this.append();
@@ -269,7 +279,7 @@
 
         // Fade/Scroll in
         if (!this.settings.centered) {
-            
+
             this.$modal.css({
                 'marginTop': -this.$modal.height()
             });
@@ -284,7 +294,7 @@
                 }, 20);
             }, 10);
 
-        // Fade in
+            // Fade in
         } else {
             this.$overlay.addClass('show in');
             this.$modal.addClass('show in');
@@ -297,7 +307,12 @@
         this.$container.addClass('modal-open');
 
         // Auto focus
-        this.$modal.find('[autofocus]').focus();
+        this.$modalDialog.find('[autofocus]').focus();
+
+        // Scroll into view
+        if (this.$modalDialog.get(0) && typeof this.$modalDialog.get(0).scrollIntoView === 'function') {
+            this.$modalDialog.get(0).scrollIntoView();
+        }
 
         // Callback
         this.settings.afterOpen.call(this, $(this.$selector));
@@ -310,37 +325,38 @@
 
         // Modal exists in HTMl already so we just display it
         if ($el) {
+            // Create modal elements
+            this.$modal = $el;
+            this.$modalInside = $('.' + this.settings.modalContentName, $el);
+            this.$modalDialog = $('.' + this.settings.modalDialogName, $el);
+            this.$overlay = (this.$overlay && this.$overlay.length) ? this.$overlay : $('<div class="' + this.settings.backdropName + ' fade" data-modal2-overlay-active></div>');
+
+            // Append modal
+            this.$modal.before(this.$overlay);
+
+            // Set to static modal if we cloned the $el
+            this.staticModal = true;
+
             // Close all other open modals
             for (var i = 0; i < $.fn.modal2.current.length; i++) {
                 if ($.fn.modal2.current[i].modalOpen && $.fn.modal2.current[i].$modal) {
-                    $.fn.modal2.current[i].close();
+                    if (this.settings.nestedForcesClose || (!$.fn.modal2.current[i].$modal.is(this.$modal) && !$.fn.modal2.current[i].$modal.has(this.$modal))) {
+                        $.fn.modal2.current[i].close();
+                    }
                 }
             }
 
-            // Find modal elements
-            this.$modal = $el;
-            this.$overlay = (this.$overlay && this.$overlay.length) ? this.$overlay : $('<div class="' + this.settings.backdropName + ' fade" data-modal2-overlay-active></div>');
-            this.$modalInside = $('.' + this.settings.modalContentName, this.$modal);
-            this.$modalDialog = $('.' + this.settings.modalDialogName, this.$modal);
-            this.$closeBtn = $(this.settings.closeModalName, this.$modalInside);
-
-            // Append modal overlay next to the modal
-            this.$modal.before(this.$overlay);
-
-            // Set to static modal
-            this.staticModal = true;
-
-        // Create new modal or use one attached to the container if it already exists
+            // Create new modal or use one attached to the container if it already exists
         } else {
-            var $modal = this.$modal || $('.'+this.settings.modalName+'[data-modal2-active]', this.$container).first();
-            var $overlay = this.$overlay || $('.'+this.settings.backdropName+'[data-modal2-overlay-active]', this.$container).first();
+            // Get previous modal elements
+            var $modal = this.$modal || $('.' + this.settings.modalName + '[data-modal2-active]', this.$container).first();
+            var $overlay = this.$overlay || $('.' + this.settings.backdropName + '[data-modal2-overlay-active]', this.$container).first();
 
             // Create modal elements
-            this.$modal = ($modal && $modal.length) ? $modal : $('<div class="' + this.settings.modalName + ' modal-' + this.settings.modalSkin + ' fade" data-modal2-active role="dialog"></div>');
-            this.$overlay = ($overlay && $overlay.length) ? $overlay : $('<div class="' + this.settings.backdropName + ' fade" data-modal2-overlay-active></div>');
+            this.$modal = ($modal && $modal.length) ? $modal : $('<div class="' + this.settings.modalName + ' modal-' + this.settings.modalSkin + ' fade" role="dialog"></div>');
             this.$modalDialog = $('<div class="' + this.settings.modalDialogName + '" role="document"></div>');
             this.$modalInside = $('<div class="' + this.settings.modalContentName + '"></div>');
-            this.$closeBtn = $(this.settings.closeModalName, this.$modalInside);
+            this.$overlay = ($overlay && $overlay.length) ? $overlay : $('<div class="' + this.settings.backdropName + ' fade" data-modal2-overlay-active></div>');
 
             // Append new modal dialog to current modal
             this.$modalDialog.append(this.$modalInside);
@@ -379,6 +395,7 @@
         }
 
         // Show modal
+        this.$modal.attr('data-modal2-active', true);
         this.$overlay.show();
         this.$modal.show();
 
@@ -421,14 +438,14 @@
                     break;
             }
 
-        // Open modal or bind events
+            // Open modal or bind events
         } else {
 
             // Selector on document opens immediately 
             if (selector.is(document)) {
                 modal = new Modal(false, options);
 
-            // else modal opens on click event of selector
+                // else modal opens on click event of selector
             } else {
                 if (typeof modal !== 'object') {
                     modal = new Modal(selector, options);
@@ -477,6 +494,7 @@
         modalContentName: 'modal-content',
         modalDialogName: 'modal-dialog',
         backdropName: 'modal-backdrop',
+        nestedForcesClose: false,
         allowCloseOverlay: true,
         onBeforeClose: $.noop,
         modalSkin: 'default',

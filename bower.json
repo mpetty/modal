@@ -1,12 +1,8 @@
 {
 	"name": "modal",
-
-	"version": "1.17.7",
-
+	"version": "1.17.8",
 	"license": "MIT",
-
 	"private": true,
-
 	"ignore": [
 		"**/.*",
 		"node_modules",
@@ -17,12 +13,10 @@
 		"Gruntfile.js",
 		"readme.md"
 	],
-
-  	"main": [
-  		"dist/jquery.modal.min.js",
-  		"dist/modal.min.css"
-  	],
-
+	"main": [
+		"dist/jquery.modal.min.js",
+		"dist/modal.min.css"
+	],
 	"dependencies": {
 		"jquery": ">=1.7.0"
 	}
