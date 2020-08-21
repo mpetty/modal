@@ -7,6 +7,7 @@ Library for opening content in a modal window. Built to be used with web applica
 ### new in 1.17.9
 
 Fixed a bug preventing scroll after closing the modal.
+
 Fixed a bug that removes the modal overlay before all nested modals are removed.
 
 ### new in 1.17.8
