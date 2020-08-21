@@ -1,8 +1,13 @@
-# Modal v1.17.8
+# Modal v1.17.9
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 
 - Requires jQuery 1.7+
+
+### new in 1.17.9
+
+Fixed a bug preventing scroll after closing the modal.
+Fixed a bug that removes the modal overlay before all nested modals are removed.
 
 ### new in 1.17.8
 
@@ -54,8 +59,8 @@ Add to your project's `package.json` file, like:
 
 ## Usage
 
-```html
-<a data-toggle="modal2" href="#">Toggle modal with data attribute</a>
+```javascript
+$('.modal').modal2(options);
 ```
 
 ```javascript

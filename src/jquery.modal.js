@@ -1,7 +1,7 @@
 /*!
  *    Name:        Modal
  *    Author:      Mitchell Petty <https://github.com/mpetty/modal>
- *    Version:     1.17.8
+ *    Version:     1.17.9
  *    Notes:       Requires jquery 1.7+
  */
 (function (factory) {
@@ -178,13 +178,8 @@
                 this.$overlay.removeClass('show in');
                 this.$modal.removeClass('show in');
 
-                if (!this.$container.children('[data-modal2-active]').length) {
-                    this.$container.removeClass('modal-open');
-                }
-
-                this.$modal.animate({ top: -(this.$modal.outerHeight(true) * 2) }, function () {
+                setTimeout(function() {
                     self.$modal.removeAttr('data-modal2-active');
-                    self.$modal.css({ top: '0' });
                     self.removeEvents();
 
                     if (self.staticModal) {
@@ -195,11 +190,14 @@
                         self.$overlay.remove();
                     }
 
+                    if (!self.$container.children('[data-modal2-active]').length) {
+                        self.$container.removeClass('modal-open');
+                    }
+
                     self.settings.afterClose.call(self, $(self.$selector));
-                });
+                }, (typeof e !== 'object' ? 0 : (this.settings.centered ? 100 : 150)));
             } else {
                 this.$modalDialog.prev('.' + this.settings.modalDialogName).show();
-                this.$modal.removeAttr('data-modal2-active');
                 this.$modalDialog.remove();
                 this.removeEvents();
 
@@ -287,8 +285,8 @@
             });
 
             setTimeout(function () {
-                self.$overlay.addClass('show');
                 self.$modal.css({ 'marginTop': 0 }).addClass('show');
+                self.$overlay.addClass('show');
 
                 setTimeout(function () {
                     self.$overlay.addClass('in');
