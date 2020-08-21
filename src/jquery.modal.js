@@ -65,7 +65,7 @@
         if (this.settings.allowCloseOverlay) {
             this.$modal.on('click.' + this.namespace, function (e) {
                 if (!$(e.target).closest('.' + self.settings.modalContentName).length) {
-                    self.close();
+                    self.close(e);
                 }
             });
         }
@@ -178,8 +178,9 @@
                 this.$overlay.removeClass('show in');
                 this.$modal.removeClass('show in');
 
-                setTimeout(function() {
+                this.$modal.animate({ top: -(this.$modal.outerHeight(true) * 2) }, function () {
                     self.$modal.removeAttr('data-modal2-active');
+                    self.$modal.css({ top: '0' });
                     self.removeEvents();
 
                     if (self.staticModal) {
@@ -195,7 +196,7 @@
                     }
 
                     self.settings.afterClose.call(self, $(self.$selector));
-                }, (typeof e !== 'object' ? 0 : (this.settings.centered ? 100 : 150)));
+                });
             } else {
                 this.$modalDialog.prev('.' + this.settings.modalDialogName).show();
                 this.$modalDialog.remove();
