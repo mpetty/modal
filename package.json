@@ -1,6 +1,6 @@
 {
   "name": "modal",
-  "version": "1.17.9",
+  "version": "1.17.10",
   "main": "src/jquery.modal.js",
   "repository": {
     "type": "git",
@@ -11,10 +11,10 @@
     "watch": "grunt watch"
   },
   "devDependencies": {
-    "grunt": "^1.4.1",
-    "grunt-contrib-concat": "^2.0.0",
+    "grunt": "^1.5.2",
+    "grunt-contrib-concat": "^2.1.0",
     "grunt-contrib-jshint": "^3.2.0",
-    "grunt-contrib-uglify": "^5.0.1",
+    "grunt-contrib-uglify": "^5.1.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-node-sass": "^1.0.1",
     "grunt-sass": "^3.1.0"

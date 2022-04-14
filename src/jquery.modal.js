@@ -1,7 +1,7 @@
 /*!
  *    Name:        Modal
  *    Author:      Mitchell Petty <https://github.com/mpetty/modal>
- *    Version:     1.17.9
+ *    Version:     1.17.10
  *    Notes:       Requires jquery 1.7+
  */
 (function (factory) {
@@ -175,6 +175,7 @@
             this.modalOpen = false;
 
             if (this.staticModal || modalCount <= 1) {
+                console.log(this.$overlay);
                 this.$overlay.removeClass('show in');
                 this.$modal.removeClass('show in');
 
@@ -324,13 +325,17 @@
 
     Modal.prototype.append = function (html, $el) {
 
+        // Get existing overlay
+        // Always reuse global overlay
+        var $overlay = this.$overlay || $('.' + this.settings.backdropName, this.$container).first();
+
         // Modal exists in HTMl already so we just display it
         if ($el) {
             // Create modal elements
             this.$modal = $el;
             this.$modalInside = $('.' + this.settings.modalContentName, $el);
             this.$modalDialog = $('.' + this.settings.modalDialogName, $el);
-            this.$overlay = (this.$overlay && this.$overlay.length) ? this.$overlay : $('<div class="' + this.settings.backdropName + ' fade" data-modal2-overlay-active></div>');
+            this.$overlay = ($overlay && $overlay.length) ? $overlay : $('<div class="' + this.settings.backdropName + ' fade" data-modal2-overlay-active></div>');
 
             // Append modal
             this.$modal.before(this.$overlay);
@@ -338,20 +343,10 @@
             // Set to static modal if we cloned the $el
             this.staticModal = true;
 
-            // Close all other open modals
-            for (var i = 0; i < $.fn.modal2.current.length; i++) {
-                if ($.fn.modal2.current[i].modalOpen && $.fn.modal2.current[i].$modal) {
-                    if (this.settings.nestedForcesClose || (!$.fn.modal2.current[i].$modal.is(this.$modal) && !$.fn.modal2.current[i].$modal.has(this.$modal))) {
-                        $.fn.modal2.current[i].close();
-                    }
-                }
-            }
-
-            // Create new modal or use one attached to the container if it already exists
+        // Create new modal or use one attached to the container if it already exists
         } else {
-            // Get previous modal elements
+            // Get previous modal
             var $modal = this.$modal || $('.' + this.settings.modalName + '[data-modal2-active]', this.$container).first();
-            var $overlay = this.$overlay || $('.' + this.settings.backdropName + '[data-modal2-overlay-active]', this.$container).first();
 
             // Create modal elements
             this.$modal = ($modal && $modal.length) ? $modal : $('<div class="' + this.settings.modalName + ' modal-' + this.settings.modalSkin + ' fade" role="dialog"></div>');
@@ -366,6 +361,15 @@
             // Append modal
             this.$container.append(this.$overlay);
             this.$container.append(this.$modal);
+        }
+
+        // Close all other open modals
+        for (var i = 0; i < $.fn.modal2.current.length; i++) {
+            if ($.fn.modal2.current[i].modalOpen && $.fn.modal2.current[i].$modal) {
+                if (this.settings.nestedForcesClose || (!$.fn.modal2.current[i].$modal.is(this.$modal) && !$.fn.modal2.current[i].$modal.has(this.$modal))) {
+                    $.fn.modal2.current[i].close();
+                }
+            }
         }
 
         // Append modal content
@@ -413,7 +417,7 @@
         // Create jquery object from selector
         selector = selector ? $(selector) : false;
 
-        // Load previous modal object 
+        // Load previous modal object
         var modal = selector ? selector.data('modal') : false;
 
         // Call command on modal
@@ -442,7 +446,7 @@
             // Open modal or bind events
         } else {
 
-            // Selector on document opens immediately 
+            // Selector on document opens immediately
             if (selector.is(document)) {
                 modal = new Modal(false, options);
 
