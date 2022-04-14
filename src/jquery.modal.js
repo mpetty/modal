@@ -175,7 +175,6 @@
             this.modalOpen = false;
 
             if (this.staticModal || modalCount <= 1) {
-                console.log(this.$overlay);
                 this.$overlay.removeClass('show in');
                 this.$modal.removeClass('show in');
 
