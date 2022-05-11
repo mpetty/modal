@@ -1,4 +1,4 @@
-# Modal v1.17.10
+# Modal v1.17.11
 
 Library for opening content in a modal window. Built to be used with web applications and ajax.
 

@@ -175,8 +175,11 @@
             this.modalOpen = false;
 
             if (this.staticModal || modalCount <= 1) {
-                this.$overlay.removeClass('show in');
                 this.$modal.removeClass('show in');
+
+                if (this.staticModal && !this.$modal.closest('.' + self.settings.modalDialogName).length) {
+                    this.$overlay.removeClass('show in');
+                }
 
                 this.$modal.animate({ top: -(this.$modal.outerHeight(true) * 2) }, function () {
                     self.$modal.removeAttr('data-modal2-active');
@@ -185,7 +188,10 @@
 
                     if (self.staticModal) {
                         self.$modal.hide();
-                        self.$overlay.hide();
+
+                        if (!self.$modal.closest('.' + self.settings.modalDialogName).length) {
+                            self.$overlay.hide();
+                        }
                     } else {
                         self.$modal.remove();
                         self.$overlay.remove();
@@ -334,10 +340,14 @@
             this.$modal = $el;
             this.$modalInside = $('.' + this.settings.modalContentName, $el);
             this.$modalDialog = $('.' + this.settings.modalDialogName, $el);
-            this.$overlay = ($overlay && $overlay.length) ? $overlay : $('<div class="' + this.settings.backdropName + ' fade" data-modal2-overlay-active></div>');
 
-            // Append modal
-            this.$modal.before(this.$overlay);
+            // Append modal backdrop if one doesnt already exist
+            if (!($overlay && $overlay.length)) {
+                this.$overlay = $('<div class="' + this.settings.backdropName + ' fade" data-modal2-overlay-active></div>');
+                this.$modal.before(this.$overlay);
+            } else {
+                this.$overlay = $overlay;
+            }
 
             // Set to static modal if we cloned the $el
             this.staticModal = true;
